@@ -39,6 +39,7 @@ int main(int argc, char* argv[])
     int nb;
 
     int nbflux = 0 ;
+    set_com.insert("*****") ;
     while (flu) {
         flu >> coder >> codelt >> nb;
         if (!coder.empty () && nb!= 0) {
