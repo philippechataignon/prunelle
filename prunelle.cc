@@ -46,26 +46,28 @@ int main(int argc, char* argv[])
     while (!fin && cpt++<(nbcom-1)) {
         //mflux.imprime() ;
         float maxlien = -100.0 ;
-        int dca = -1 ;
-        int dcb = -1 ;
+        int sat = -1 ;
+        int pole = -1 ;
         for(int i=0 ; i<nbcom; i++) {
             if (vcom[i].status && 
                     (vcom[i].maxlien > maxlien || 
-                        (dca != -1 && vcom[i].maxlien>= maxlien - 1e-3 && vcom[i].act > vcom[dca].act)
+                        (sat != -1 && vcom[i].maxlien>= maxlien - 1e-3 && vcom[i].act > vcom[sat].act)
                     )
                 ) {
-                dca = i ;
-                dcb = vcom[i].dcmaxlien ;
+                sat = i ;
+                pole = vcom[i].dcmaxlien ;
                 maxlien = vcom[i].maxlien ;
             }
         }
-        fin = (dca == -1 || dcb == -1 || maxlien < 1E-40) ;
+        fin = (sat == -1 || pole == -1 || maxlien < 1E-40) ;
         if (!fin) {
-            std::cout << "AGREG : " << vcom[dca].nom << "\t" <<vcom[dcb].nom << '\t' << maxlien << std::endl ; 
-            out << vcom[dca].nom << "\t" <<vcom[dcb].nom << '\t' << maxlien << std::endl ; 
-            std::cout << vcom[dca] << "\n" <<vcom[dcb] << '\n' ; 
-            agrege(mflux,vcom,dcb,dca) ;
-            std::cout << vcom[dca] << std::endl ; 
+            std::cout << "AGREG : " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << std::endl ; 
+            out << vcom[sat].nom << "\t" <<vcom[pole].nom << '\t' << maxlien << std::endl ; 
+            std::cout << vcom[sat] << "\n" <<vcom[pole] << '\n' ; 
+            agrege(mflux,vcom,pole,sat) ;
+            calcul_lien(mflux, vcom, pole, type) ;
+            calcul_lien_dual(mflux, vcom, pole, type) ;
+            std::cout << vcom[pole] << std::endl ; 
         }
     }
     return 0;

@@ -54,7 +54,7 @@ void calcul_lien_init(matflux & mflux, std::vector<commune> & vcom, int type)
 {
     std::cout << "Calcul des liens init" << std::endl ;
     for (int i=0; i<vcom.size(); i++) {
-        calcul_lien(mflux, vcom, i) ;
+        calcul_lien(mflux, vcom, i, type) ;
     }
 }
 
@@ -69,8 +69,7 @@ void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb
     vcom[numdca].emp = vcom[numdca].sta + vcom[numdca].ent;
     vcom[numdca].act = vcom[numdca].sta + vcom[numdca].sor;
     mflux.merge(numdca,numdcb) ;
+    vcom[numdca].nbagreg++ ;
     vcom[numdcb].status = 0 ;
-    calcul_lien(mflux, vcom, numdca) ;
-    calcul_lien_dual(mflux, vcom, numdca) ;
 }
 

@@ -4,7 +4,7 @@
 #include "matflux.h"
 #include "lien.h"
 
-void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdc_l)
+void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdc_l, int type)
 {
     float maxlien = -1e40 ;
     int   dcmaxlien = -1 ;
@@ -14,7 +14,7 @@ void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdc_l)
         //    std::cout << "LIEN : " <<numdc_l << "," <<numdc_c << std::endl ;
         if (numdc_l != numdc_c && numdc_l && numdc_c) {
             int numval=p->numval ;
-            float lien = calcul_lien_elem_sta(mflux, vcom, numdc_l, numdc_c, mflux.tabval[numval].nb) ;
+            float lien = calcul_lien_elem(mflux, vcom, numdc_l, numdc_c, mflux.tabval[numval].nb, type) ;
             mflux.tabval[numval].lien = lien ;
             if (lien > maxlien ||
                     (dcmaxlien != -1 && lien>= maxlien - 1e-3 && vcom[numdc_c].act > vcom[dcmaxlien].act)
@@ -29,14 +29,14 @@ void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdc_l)
     vcom[numdc_l].status = 1 ;
 }
 
-void calcul_lien_dual(matflux & mflux, std::vector<commune> & vcom, int numdc_c) {
+void calcul_lien_dual(matflux & mflux, std::vector<commune> & vcom, int numdc_c, int type) {
     element* p ;
     for (p = mflux.tete_c[numdc_c]; p != 0; p = p->next) {
         int numdc_l=p->numlc ;
         //std::cout << "LIEN_DUAL : " <<numdc_l << "," <<numdc_c << std::endl ;
         if (numdc_l != numdc_c && numdc_l && numdc_c) {
             int numval=p->numval ;
-            float lien = calcul_lien_elem_sta(mflux, vcom, numdc_l, numdc_c, mflux.tabval[numval].nb) ;
+            float lien = calcul_lien_elem(mflux, vcom, numdc_l, numdc_c, mflux.tabval[numval].nb,type) ;
             mflux.tabval[numval].lien = lien ;
             if (lien > vcom[numdc_l].maxlien ||
                     (vcom[numdc_l].dcmaxlien != -1 
@@ -55,17 +55,17 @@ float calcul_lien_elem(matflux & mflux, std::vector<commune> & vcom, int numdc_l
     switch (type) {
         case 0 :
         {
-            calcul_lien_elem_a0(mflux, vcom, numdc_l, numdc_c, nb) ;
+            return calcul_lien_elem_a0(mflux, vcom, numdc_l, numdc_c, nb) ;
             break ;
         }
         case 1 :
         {
-            calcul_lien_elem_sta(mflux, vcom, numdc_l, numdc_c, nb) ;
+            return calcul_lien_elem_sta(mflux, vcom, numdc_l, numdc_c, nb) ;
             break ;
         }
         default:
         {
-            std::cout << "Erreur type de lien" << std::endl ;
+            std::cerr << "Erreur type de lien" << std::endl ;
             exit(1) ;
         }
     }
