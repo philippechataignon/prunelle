@@ -4,35 +4,42 @@
 
 #include "globals.h"
 #include "lien.h"
+#include "liens.h"
 #include "commune.h"
 #include "matflux.h"
-
-#include "lien_aa.h"
-#include "lien_es.h"
+#include "parse_opt.h"
 
 int main(int argc, char* argv[])
 {
     std::cout << "Prunelle V 8.01 - " << __DATE__ << " - " << __TIME__ <<
         std::endl;
 
-    if (argc != 4 ) {
-        std::cout << "Entrer fichier prunelle\n";
-        std::exit (0);
+    char f_in[128] ;
+    char f_out[128] ;
+    int  verbeux = 1;
+    int  f_lien = 0 ;
+
+    parse_opt(argc,argv,&verbeux,f_in,f_out,&f_lien) ;
+
+    if (! *f_in) {
+        std::cout << "Erreur : pas de fichier indiqué en entrée (-i nom_fichier)" << std::endl ;
+        ::help() ;
+        std::exit(1);
     }
 
-    std::ifstream in (argv[1]);
+    std::ifstream in (f_in);
     if (in == 0) {
         std::cout << "Erreur : impossible d'ouvrir le fichier prunelle" << std::endl ;
         std::exit(1);
     }
 
-    std::ofstream out (argv[2]);
+    std::ofstream out (f_out);
     if (out == 0) {
         std::cout << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
         std::exit(1);
     }
 
-    const int type = std::atoi(argv[3]) ;
+    const int type = f_lien ;
 
     int nbcom, nbflux ;
     in >> nbflux ;
@@ -79,11 +86,10 @@ int main(int argc, char* argv[])
         fin = (sat == -1 || pole == -1 || maxlien<=vlien->val_stop() ) ;
         if (!fin) {
             out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << maxlien << "\t" << vcom[sat] << "\t" ; 
-            std::cout << "AGREG : " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\n" ; 
+            if (verbeux >= 1) {
+                std::cout << "AGR: " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\n" ; 
+            }
             agrege(mflux,vcom,pole,sat) ;
-            // calcul_lien     (mflux, vcom, pole, type) ;
-            //calcul_lien_dual(mflux, vcom, pole, type) ;
-            //calcul_lien_sim (mflux, vcom, pole, type) ;
             vlien->calcul_sim (pole) ;
             out << vcom[pole] << "\n" ; 
         }

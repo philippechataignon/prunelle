@@ -10,8 +10,8 @@ CXXFLAGS=-O3 -axK -xK -tpp6   -march=pentiumiii
 # LDFLAGS=-cxxlib-gcc -gcc-name=g++
 
 # OBJ = prunelle.o globals.o lien.o lien_elem.o matflux.o valeur.o element.o commune.o
-LIEN = lien_aa.o lien_es.o
-OBJ = prunelle.o globals.o lien.o matflux.o valeur.o element.o commune.o $(LIEN)
+LIEN = liens.o
+OBJ = prunelle.o parse_opt.o globals.o lien.o matflux.o valeur.o element.o commune.o $(LIEN)
 OBJTEST = test.o matflux.o valeur.o element.o
 OBJPREP = prepare_flux.o matflux.o valeur.o element.o commune.o
 

@@ -44,11 +44,12 @@ void lecture_fich (std::ifstream & in, matflux & mflux, std::vector<commune> & v
         }
         avt = (100 * i) / nbflux ;
         if (avt != last_avt) {
-            std::cout << avt << "% ";
+            std::cout << ".";
             std::cout.flush() ;
             last_avt = avt ;
         }
     }
+    std::cout << std::endl ;
 }
 
 void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb) 
