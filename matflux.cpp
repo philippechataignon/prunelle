@@ -117,7 +117,7 @@ matflux::delete_element (element* vtete[], int ind, element* p, element* pp)
     // si pp = 0, on détruit le premier element en modifiant la tête de liste
     // std::cout << "Delete element : " << ind << "\t" << p << "\t" << pp <<  std::endl;
 
-    if (p != 0) {
+    if (p) {
         if (pp == 0) {
             vtete[ind] = p->next; 
         } else {
@@ -134,7 +134,7 @@ matflux::delete_element (element* vtete[], int ind, element* p, element* pp)
 int
 matflux::insert (element* vtete[], int ind, element* pins)
 {
-    // insere le element pointé par pins dans la ligne/colonne (selon irlt)
+    // insere le element pointé par pins dans la ligne/colonne
     // numéro w_num
     element* p;
     element* pp;
@@ -142,7 +142,7 @@ matflux::insert (element* vtete[], int ind, element* pins)
     bool insert_fait = false;
 
     for (p = vtete[ind], pp = 0; p != 0; pp = p, p = p->next) {
-        if (pins->numlc > p->numlc) {
+        if (p->numlc < pins->numlc) {
             // insertion au milieu entre pp et p, soit après pp
             insere_element (vtete,ind, pins, pp, p);
             insert_fait = true;
@@ -175,8 +175,8 @@ matflux::merge_lc (element* vtete_l[], element* vtete_c[], int inda, int indb )
             change_ind(vtete_c, pb->numlc, indb, inda) ;
             pb = pb->next;
         } else {
-            // on cumule les elements venant de B avec celui de A : on supprime dans le dual
-            // pour éviter les 0 inutiles 
+            // on cumule l'element venant de B avec celui de A : 
+	    // on supprime dans le dual pour éviter les 0 inutiles 
             tabval[pa->numval].nb += tabval[pb->numval].nb;
             tabval[pb->numval].nb = 0 ;
             delete_ind(vtete_c, pb->numlc, indb) ;
@@ -193,22 +193,12 @@ void
 matflux::change_ind(element* vtete[], int ind, int indb, int inda)
 {
     // Transforme indb en inda dans liste ind
-    element* p ;
-    element* pp ;
-    element* pb = 0 ;
-    element* ppb = 0 ;
-    // cherche b
-    for (p = vtete[ind], pp = 0; p != 0 && p->numlc >= indb ; pp = p, p = p->next) {
+    for (element *p = vtete[ind], *pp = 0; p != 0 && p->numlc >= indb ; pp = p, p = p->next) {
         if (p->numlc == indb) {
             p->numlc = inda ;
-            pb = p;
-            ppb = pp ;
+            delete_element(vtete,ind,p,pp)   ;
+            insert(vtete,ind,p) ;
         }
-    }
-
-    if (pb) {
-        delete_element(vtete,ind,pb,ppb)   ;
-        insert(vtete,ind,pb) ;
     }
 }
 
@@ -216,19 +206,9 @@ void
 matflux::delete_ind(element* vtete[], int ind, int indb)
 {
     // Supprime indb dans liste ind
-    element* p ;
-    element* pp ;
-    element* pb = 0 ;
-    element* ppb = 0 ;
-    // cherche b
-    for (p = vtete[ind], pp = 0; p != 0 && p->numlc >= indb ; pp = p, p = p->next) {
+    for (element *p = vtete[ind], *pp = 0; p != 0 && p->numlc >= indb ; pp = p, p = p->next) {
         if (p->numlc == indb) {
-            pb = p;
-            ppb = pp ;
+            delete_element(vtete,ind,p,pp)   ;
         }
-    }
-
-    if (pb) {
-        delete_element(vtete,ind,pb,ppb)   ;
     }
 }

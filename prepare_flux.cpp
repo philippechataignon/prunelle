@@ -22,13 +22,16 @@ int main(int argc, char* argv[])
     std::ifstream flu (argv[1]);
     if (flu == 0) {
         std::cout << "Erreur : impossible d'ouvrir le fichier couple" << std::endl ;
-        exit(1);
+	std::exit(1);
     }
 
     std::ofstream out (argv[2]);
     if (out == 0) {
         std::cout << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
-        exit(1);
+	std::exit(1);
+    } else if (flu == out) {
+        std::cout << "Erreur : fichiers entrée et sortie identiques" ;
+	std::exit(1);
     }
 
     std::set <std::string> set_com;
