@@ -71,6 +71,11 @@ void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb
     vcom[numdca].act = vcom[numdca].sta + vcom[numdca].sor;
     mflux.merge(numdca,numdcb) ;
     vcom[numdca].nbagreg++ ;
+    for (unsigned int i=0; i<vcom.size(); i++) {
+        if (vcom[i].status && vcom[i].dcmaxlien==numdcb) {
+            vcom[i].dcmaxlien=numdca ;
+        }
+    }
     vcom[numdcb].status = 0 ;
 }
 
