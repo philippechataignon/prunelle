@@ -1,12 +1,8 @@
-//---------------------------------------------------------------------------
-#ifndef communeH
-#define communeH
+#ifndef commune_h
+#define commune_h
 
-#include <set>
 #include <string>
 #include <iostream>
-
-#include "flux.h"
 
 class commune
 {
@@ -36,6 +32,4 @@ public:
   friend std::ostream & operator << (std::ostream & os,
 				     const commune & commune);
 };
-//---------------------------------------------------------------------------
 #endif
-
