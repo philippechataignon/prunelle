@@ -44,10 +44,11 @@ listeflux::ajoute_flux (int numdc, flux * pins, flux * pp)
     // ajoute le flux pointé par pins en queue
     // après le flux pointé par ppos
     // si pp = 0, l'insertion se fait en tête
-    if (pp == 0)		// insertion en tête
+    if (pp == 0) {		// insertion en tête
         tete[numdc] = pins;
-    else				// insertion après ppos
+    } else {				// insertion après ppos
         pp->next = pins;
+    }
     return pins;
 }
 
