@@ -40,9 +40,15 @@ int main(int argc, char* argv[])
     lecture_fich (in, mflux, vcom);
     calcul_lien(mflux,vcom) ;
 
+    float maxlien = -100.0 ;
+    int   dca = -1 ;
+    int dcb = -1 ;
     for(int i=0 ; i<nbcom; i++) {
-        std::cout << vcom[i] << std::endl ;
+        if (vcom[i].maxlien > maxlien) {
+            maxlien = vcom[i].maxlien ;
+            dca = i ;
+            dcb = vcom[i].dcmaxlien ;
+        }
     }
-
-    mflux.imprime() ;
+    std::cout << vcom[dca].nom << "\t" << vcom[dcb].nom << '\t' << maxlien ; 
 }
