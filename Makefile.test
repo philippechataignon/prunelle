@@ -1,0 +1,9 @@
+CC=g++
+CPPFLAGS=-O2 -pipe -fomit-frame-pointer
+
+OBJECTS = test.o matflux.o valeur.o element.o
+
+test: $(OBJECTS)
+
+clean:
+	-rm $(OBJECTS) test
