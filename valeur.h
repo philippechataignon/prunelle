@@ -1,7 +1,7 @@
 #ifndef VALEUR_H
 #define VALEUR_H
 
-#include <iostream>
+#include <iosfwd>
 
 class valeur
 {

@@ -1,9 +1,11 @@
-# CC=g++
-# CXX=g++
-# CXXFLAGS=-Os -march=athlon-xp -pipe -fomit-frame-pointer
-CC=/opt/intel/compiler70/ia32/bin/icc
-CXX=/opt/intel/compiler70/ia32/bin/icc
-CXXFLAGS=-O2 -tpp6 -march=pentiumiii
+#CC=g++
+#CXX=g++
+#CXXFLAGS=-O2 -march=athlon-xp -pipe -fomit-frame-pointer
+CC=/opt/intel/compiler80/bin/icc
+CXX=/opt/intel/compiler80/bin/icc
+CXXFLAGS=-O3 -tpp6 -march=pentiumiii 
+#LDFLAGS=-static-libcxa
+# LDFLAGS=-cxxlib-gcc -gcc-name=g++
 
 OBJ = prunelle.o globals.o lien.o matflux.o valeur.o element.o commune.o
 OBJTEST = test.o matflux.o valeur.o element.o

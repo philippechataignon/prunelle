@@ -1,8 +1,8 @@
 #ifndef commune_h
 #define commune_h
 
+#include <iosfwd>
 #include <string>
-#include <iostream>
 
 class commune
 {

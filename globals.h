@@ -1,7 +1,7 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
+#include <iosfwd>
 #include <vector>
-#include <fstream>
 #include "matflux.h"
 #include "commune.h"
 

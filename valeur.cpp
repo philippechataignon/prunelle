@@ -1,3 +1,4 @@
+#include <iostream>
 #include "valeur.h"
 
 std::ostream & operator << (std::ostream & os, const valeur & valeur)

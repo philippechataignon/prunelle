@@ -1,3 +1,4 @@
+#include <ostream>
 #include "commune.h"
 
 commune::commune (std::string w_nom):nom (w_nom)
