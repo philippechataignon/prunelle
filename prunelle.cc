@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
     std::cout << "Prunelle V 8.01 - " << __DATE__ << " - " << __TIME__ <<
         std::endl;
 
-    if (argc != 3 ) {
+    if (argc != 4 ) {
         std::cout << "Entrer fichier prunelle\n";
         std::exit (0);
     }
@@ -28,12 +28,12 @@ int main(int argc, char* argv[])
         exit(1);
     }
 
-    int type = 0;
+    const int type = std::atoi(argv[3]) ;
 
     int nbcom, nbflux ;
     in >> nbflux ;
     in >> nbcom ;
-    std::cout << nbflux << "/" << nbcom << std::endl ;
+    std::cout << nbflux << "/" << nbcom << "/" << type <<std::endl ;
 
     std::vector<commune> vcom ;
     vcom.reserve(nbcom) ;
@@ -51,9 +51,9 @@ int main(int argc, char* argv[])
         for(int i=0 ; i<nbcom; i++) {
             if (vcom[i].status && 
                     (vcom[i].maxlien > maxlien || 
-                        (sat != -1 && vcom[i].maxlien>= maxlien - 1e-3 && vcom[i].act > vcom[sat].act)
+                     (sat != -1 && vcom[i].maxlien>= maxlien - 1e-3 && vcom[i].act > vcom[sat].act)
                     )
-                ) {
+               ) {
                 sat = i ;
                 pole = vcom[i].dcmaxlien ;
                 maxlien = vcom[i].maxlien ;
@@ -61,13 +61,13 @@ int main(int argc, char* argv[])
         }
         fin = (sat == -1 || pole == -1 || maxlien < 1E-40) ;
         if (!fin) {
-            std::cout << "AGREG : " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << std::endl ; 
-            out << vcom[sat].nom << "\t" <<vcom[pole].nom << '\t' << maxlien << std::endl ; 
-            std::cout << vcom[sat] << "\n" <<vcom[pole] << '\n' ; 
+            out << vcom[sat].nom << "\t" <<vcom[pole].nom << '\t' << maxlien ; 
+            // std::cout << "AGREG : " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << std::endl ; 
+
             agrege(mflux,vcom,pole,sat) ;
             calcul_lien(mflux, vcom, pole, type) ;
             calcul_lien_dual(mflux, vcom, pole, type) ;
-            std::cout << vcom[pole] << std::endl ; 
+            out << vcom[pole] << "\n" ; 
         }
     }
     return 0;
