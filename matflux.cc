@@ -56,6 +56,16 @@ int matflux::get_val (int w_lig,int w_col)
     return ret_val ;
 }
 
+// listent matflux::list_num_lig(int w_lig)
+// {
+//     listent l ;
+//     element* p ;
+//     for (p=tete_l[w_lig] ; p!=0 ; p=p->next) {
+//             l.insert(p->numval);
+//     }
+//     return l ;
+// }
+
 void matflux::imprime ()
 {
     for (int i=0 ; i<dim ; i++) {

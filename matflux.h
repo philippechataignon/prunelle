@@ -1,8 +1,14 @@
 #ifndef MATFLUX_H
 #define MATFLUX_H
 
+#include <vector>
+
 #include "valeur.h" 
 #include "element.h" 
+#include "commune.h" 
+
+// typedef std::set<int> listent ;
+// typedef std::set<int>::iterator listent_iter ;
 
 class matflux
 {
@@ -16,9 +22,13 @@ public:
 
     int set_val (int w_lig,int w_col, int w_val);
     int get_val (int w_lig,int w_col);
+    int get_dim()   {return dim;}
+    int get_nbval() {return nbval;}
+    //    listent list_num_lig(int w_lig) ;
     void imprime() ;
     void merge (int inda, int indb) ;
     
+    friend void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdca) ;
 private:
     element* ajoute_element (element* vtete[], int ind, element* pins, element* pp) ;
     element* insere_element (element* vtete[], int ind, element* pins, element* pp, element* p) ;

@@ -37,9 +37,12 @@ int main(int argc, char* argv[])
     std::vector<commune> vcom ;
     vcom.reserve(nbcom) ;
     matflux mflux (nbcom,nbflux);
-    lecture_fich (in, mflux, vcom, nbflux, nbcom);
+    lecture_fich (in, mflux, vcom);
+    calcul_lien(mflux,vcom) ;
 
     for(int i=0 ; i<nbcom; i++) {
         std::cout << vcom[i] << std::endl ;
     }
+
+    mflux.imprime() ;
 }
