@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
         for(int i=0 ; i<nbcom; i++) {
             if (vcom[i].status && 
                     (vcom[i].maxlien > maxlien || 
-                     (sat != -1 && vcom[i].maxlien>= maxlien - 1e-3 && vcom[i].act > vcom[sat].act)
+                        (sat != -1 && vcom[i].maxlien==maxlien && vcom[i].act < vcom[sat].act)
                     )
                ) {
                 sat = i ;
@@ -59,11 +59,10 @@ int main(int argc, char* argv[])
                 maxlien = vcom[i].maxlien ;
             }
         }
-        fin = (sat == -1 || pole == -1 || maxlien < 1E-40) ;
+        fin = (sat == -1 || pole == -1 || maxlien<=0) ;
         if (!fin) {
-            out << vcom[sat].nom << "\t" <<vcom[pole].nom << '\t' << maxlien << "\t"; 
-            std::cout << "AGREG : " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << std::endl ; 
-
+            out << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\t" << vcom[sat] << "\t" ; 
+            // std::cout << "AGREG : " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\n" ; 
             agrege(mflux,vcom,pole,sat) ;
             calcul_lien(mflux, vcom, pole, type) ;
             calcul_lien_dual(mflux, vcom, pole, type) ;

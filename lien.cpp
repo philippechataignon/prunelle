@@ -6,19 +6,16 @@
 
 void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdc_l, int type)
 {
-    float maxlien = -1e40 ;
+    float maxlien = -1e10 ;
     int   dcmaxlien = -1 ;
     element* p ;
     for (p = mflux.tete_l[numdc_l]; p != 0; p = p->next) {
         int numdc_c=p->numlc ;
-        //    std::cout << "LIEN : " <<numdc_l << "," <<numdc_c << std::endl ;
         if (numdc_l != numdc_c && numdc_l && numdc_c) {
             int numval=p->numval ;
             float lien = calcul_lien_elem(mflux, vcom, numdc_l, numdc_c, mflux.tabval[numval].nb, type) ;
             mflux.tabval[numval].lien = lien ;
-            if (lien > maxlien ||
-                    (dcmaxlien != -1 && lien>= maxlien - 1e-3 && vcom[numdc_c].act > vcom[dcmaxlien].act)
-               ) {
+            if (lien > maxlien) {
                 maxlien = lien ;
                 dcmaxlien = numdc_c ;
             }
@@ -33,17 +30,11 @@ void calcul_lien_dual(matflux & mflux, std::vector<commune> & vcom, int numdc_c,
     element* p ;
     for (p = mflux.tete_c[numdc_c]; p != 0; p = p->next) {
         int numdc_l=p->numlc ;
-        //std::cout << "LIEN_DUAL : " <<numdc_l << "," <<numdc_c << std::endl ;
         if (numdc_l != numdc_c && numdc_l && numdc_c) {
             int numval=p->numval ;
             float lien = calcul_lien_elem(mflux, vcom, numdc_l, numdc_c, mflux.tabval[numval].nb,type) ;
             mflux.tabval[numval].lien = lien ;
-            if (lien > vcom[numdc_l].maxlien ||
-                    (vcom[numdc_l].dcmaxlien != -1 
-                        && lien >= vcom[numdc_l].maxlien - 1e-3 
-                        && vcom[numdc_c].act > vcom[vcom[numdc_l].dcmaxlien].act
-                    )
-               ) {
+            if (lien > vcom[numdc_l].maxlien) {
                 vcom[numdc_l].maxlien = lien ;
                 vcom[numdc_l].dcmaxlien = numdc_c ;
             }
@@ -82,8 +73,8 @@ float calcul_lien_elem_sta(matflux & mflux, std::vector<commune> & vcom, int num
     if (a0 && a1) {
         int sab = s0 + s1 + nb + mflux.get_val(numdc_c,numdc_l) ;
         float txsta_ab = static_cast<float> (100*sab) / (a0+a1) ;
-        float txsta_a = static_cast<float> (100*s0) / a0 ;
-        float txsta_b = static_cast<float> (100*s1) / a1 ;
+        float txsta_a = static_cast<float>  (100*s0)  / a0 ;
+        float txsta_b = static_cast<float>  (100*s1)  / a1 ;
         float txmax = txsta_a > txsta_b ? txsta_a : txsta_b ;
         lien = txsta_ab - txmax ;
     } else {

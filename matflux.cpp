@@ -135,9 +135,9 @@ matflux::delete_element (element* vtete[], int ind, element* p, element* pp)
 //******************************************************************************
 
 int
-matflux::insert (element* vtete[], int ind, element* pelement)
+matflux::insert (element* vtete[], int ind, element* pins)
 {
-    // insere le element pointé par pelement dans la ligne/colonne (selon irlt)
+    // insere le element pointé par pins dans la ligne/colonne (selon irlt)
     // numéro w_num
     element* p;
     element* pp;
@@ -145,9 +145,9 @@ matflux::insert (element* vtete[], int ind, element* pelement)
     bool insert_fait = false;
 
     for (p = vtete[ind], pp = 0; p != 0; pp = p, p = p->next) {
-        if (p->numlc < pelement->numlc) {
+        if (pins->numlc > p->numlc) {
             // insertion au milieu entre pp et p, soit après pp
-            insere_element (vtete,ind, pelement, pp, p);
+            insere_element (vtete,ind, pins, pp, p);
             insert_fait = true;
             break;
         }
@@ -155,7 +155,7 @@ matflux::insert (element* vtete[], int ind, element* pelement)
 
     if (insert_fait == false) {
         // insertion en queue
-        insere_element (vtete,ind, pelement, pp, 0);
+        insere_element (vtete,ind, pins, pp, 0);
     }
     return 0;
 }
