@@ -75,3 +75,14 @@ float calcul_lien_elem_es0(matflux & mflux, std::vector<commune> & vcom, int num
     } 
     return lien ;
 }
+
+float calcul_lien_elem2(matflux & mflux, std::vector<commune> & vcom, int numdc_l, int numdc_c, int nb, int nb_d,int type)
+{
+    float lien = 0 ;
+    int s0 = vcom[numdc_l].sor ;
+    int s1 = vcom[numdc_c].sor ;
+    if (s0 && s1) {
+        lien =  static_cast<float> (100* (nb + nb_d)) / (s0 + s1) ;
+    } 
+    return lien ;
+}

@@ -69,9 +69,9 @@ int main(int argc, char* argv[])
             out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << maxlien << "\t" << vcom[sat] << "\t" ; 
             std::cout << "AGREG : " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\n" ; 
             agrege(mflux,vcom,pole,sat) ;
-            calcul_lien     (mflux, vcom, pole, type) ;
-            calcul_lien_dual(mflux, vcom, pole, type) ;
-            //calcul_lien_sim (mflux, vcom, pole, type) ;
+            // calcul_lien     (mflux, vcom, pole, type) ;
+            //calcul_lien_dual(mflux, vcom, pole, type) ;
+            calcul_lien_sim (mflux, vcom, pole, type) ;
             out << vcom[pole] << "\n" ; 
         }
     }

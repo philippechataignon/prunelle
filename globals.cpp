@@ -74,6 +74,8 @@ void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb
         }
     }
     vcom[numdcb].status = 0 ;
+    vcom[numdca].maxlien = -1e20 ;
+    vcom[numdca].dcmaxlien = -1 ;
 }
 
 void help()
