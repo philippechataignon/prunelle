@@ -26,5 +26,6 @@ public:
   short int status;
   int   dcmaxlien ;
   float maxlien;
+  int nbagreg ;
 };
 #endif
