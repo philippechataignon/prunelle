@@ -42,7 +42,11 @@ private:
     int renvoie_indent () { return indent++ ; }
     void remplace (int numdc, int numdca , int numdcb);
 
-private:
+
+    //******************************************************************************
+    // Variables
+    //******************************************************************************
+
     int indent;
     const unsigned int nbcom;
 
