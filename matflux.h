@@ -25,7 +25,7 @@ public:
     int get_dim()   {return dim;}
     int get_nbval() {return nbval;}
     //    listent list_num_lig(int w_lig) ;
-    void imprime() ;
+    void affiche() ;
     void merge (int inda, int indb) ;
     
     friend void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdca, const int type) ;

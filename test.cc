@@ -14,9 +14,9 @@ int main(int argc, char* argv[])
     mat.set_val(2,3,1) ;
     mat.set_val(3,1,4) ;
     mat.set_val(3,3,6) ;
-    mat.imprime() ;
+    mat.affiche() ;
     std::cout << mat.get_val(2,1) << "/" << mat.get_val(1,2) << "/" << mat.get_val(3,3) << std::endl ;
     mat.merge(0,3) ;
-    mat.imprime() ;
+    mat.affiche() ;
     return 0;
 }

@@ -14,4 +14,4 @@ prepare_flux: $(OBJPREP)
 prunelle.o: globals.h
 
 clean:
-	-rm $(OBJ) $(OBJTEST) $(OBJPREP) prunelle test prepare_flux 
+	-rm $(OBJ) $(OBJTEST) $(OBJPREP) *~ prunelle test prepare_flux 

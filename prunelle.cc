@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
     int cpt = 0;
 
     while (!fin && cpt++<(nbcom-1)) {
-        //mflux.imprime() ;
+        //mflux.affiche() ;
         float maxlien = -100.0 ;
         int sat = -1 ;
         int pole = -1 ;
