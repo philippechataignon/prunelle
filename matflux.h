@@ -1,14 +1,14 @@
 #ifndef MATFLUX_H
 #define MATFLUX_H
 
-#include <list>
+#include <set>
 #include <iterator>
 
 #include "valeur.h" 
 #include "element.h" 
 
-typedef std::list<int> listent ;
-typedef std::list<int>::iterator listent_iter ;
+typedef std::set<int> listent ;
+typedef std::set<int>::iterator listent_iter ;
 
 class matflux
 {
@@ -32,8 +32,10 @@ private:
     element* insere_element (element* vtete[], int ind, element* pins, element* pp, element* p) ;
     element* delete_element (element* vtete[], int ind, element* p, element* pp) ;
     int insert    (element* vtete[], int ind, element* pelement) ;
-    void merge_lc (element* vtete[], int inda, int indb ) ;
+    void merge_lc (element* vtete[], element* vtete_c[], int inda, int indb ) ;
     void supprime_zero(element* vtete[], int ind) ;
+    void change_ind(element* vtete[], int ind, int indb, int inda) ;
+    void delete_ind(element* vtete[], int ind, int indb) ;
     
     const unsigned int dim ;
     int nbval  ;

@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     matflux mat(4,15) ;
     mat.set_val(0,0,12) ;
     mat.set_val(0,1,14) ;
-    mat.set_val(0,3,7) ;
+//    mat.set_val(0,3,7) ;
     mat.set_val(1,0,15) ;
     mat.set_val(1,1,17) ;
     mat.set_val(1,2,9) ;

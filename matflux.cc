@@ -1,5 +1,6 @@
 #include <list>
 #include <iterator>
+#include <algorithm>
 #include "matflux.h"
 #include "valeur.h"
 
@@ -60,7 +61,7 @@ listent matflux::list_num_col(int w_lig)
     listent l ;
     element* p ;
     for (p=tete_l[w_lig] ; p!=0 ; p=p->next) {
-        l.push_back(p->numlc) ;
+        l.insert(p->numlc) ;
     }
     return l ;
 }
@@ -70,7 +71,7 @@ listent matflux::list_num_lig(int w_col)
     listent l ;
     element* p ;
     for (p=tete_c[w_col] ; p!=0 ; p=p->next) {
-        l.push_back(p->numlc) ;
+        l.insert(p->numlc) ;
     }
     return l ;
 }
@@ -95,16 +96,34 @@ void matflux::imprime ()
 
 void matflux::merge (int inda, int indb)
 {
-    listent l_col = list_num_col(indb) ;
-    listent l_lig = list_num_lig(indb) ;
-    merge_lc(tete_l,inda,indb) ;
-    for (listent_iter i = l_col.begin() ; i != l_col.end() ; i++) {
-         supprime_zero(tete_c,*i) ;
-    }
-    merge_lc(tete_c,inda,indb) ;
-    for (listent_iter i = l_lig.begin() ; i != l_lig.end() ; i++) {
-        supprime_zero(tete_l,*i) ;
-    }
+//    listent l_cola = list_num_col(inda) ;
+//    listent l_liga = list_num_lig(inda) ;
+//    listent l_colb = list_num_col(indb) ;
+//    listent l_ligb = list_num_lig(indb) ;
+//    
+//    listent l_col ;
+//    std::set_union(l_cola.begin(), l_cola.end(), l_colb.begin(), l_colb.end(), 
+//                                   std::inserter(l_col,l_col.begin())) ;
+//    
+//    listent l_lig ;
+//    std::set_union(l_liga.begin(), l_liga.end(), l_ligb.begin(), l_ligb.end(), 
+//                                   std::inserter(l_lig,l_lig.begin())) ;
+//    listent l ;
+//    std::set_union(l_lig.begin(), l_lig.end(), l_col.begin(), l_col.end(), 
+//                                   std::inserter(l,l.begin())) ;
+    merge_lc(tete_l,tete_c,inda,indb) ;
+
+    imprime() ;
+    
+//    for (listent_iter i = l_col.begin() ; i != l_col.end() ; i++) {
+//         supprime_zero(tete_c,*i) ;
+//    }
+
+    merge_lc(tete_c,tete_l,inda,indb) ;
+
+//    for (listent_iter i = l_lig.begin() ; i != l_lig.end() ; i++) {
+//        supprime_zero(tete_l,*i) ;
+//    }
 }
 
 //******************************************************************************
@@ -188,36 +207,38 @@ matflux::insert (element* vtete[], int ind, element* pelement)
 }
 
 void
-matflux::merge_lc (element* vtete[], int inda, int indb )
+matflux::merge_lc (element* vtete_l[], element* vtete_c[], int inda, int indb )
 {
     element *p = 0;               // pointeur sur la liste en cours de constitution
-    element *pa = vtete[inda];    // pointeur de la liste numdca
-    element *pb = vtete[indb];    // pointeur de la liste numdcb
+    element *pa = vtete_l[inda];    // pointeur de la liste numdca
+    element *pb = vtete_l[indb];    // pointeur de la liste numdcb
     // tant que les deux listes ne sont pas épuisées
     while (pa != 0 || pb != 0) {
         // std::cout << p << "/" << pa << "/" << pb << "/" << pa->numlc <<  "," << pb->numlc << std::endl ;
         if ((pa != 0) && (pb == 0 || pa->numlc < pb->numlc)) {
             std::cout << "A" << std::endl ;
             // on prend dans la liste A
-            p = ajoute_element (vtete, inda, pa, p);
+            p = ajoute_element (vtete_l, inda, pa, p);
             pa = pa->next;
         } else if ((pb != 0) && (pa == 0 ||pb->numlc < pa->numlc)) {
             std::cout << "B" << std::endl ;
             // on prend dans la liste B
-            p = ajoute_element (vtete, inda, pb, p);
+            p = ajoute_element (vtete_l, inda, pb, p);
+            change_ind(vtete_c, pb->numlc, indb, inda) ;
             pb = pb->next;
         } else {
             // on cumule les element venant de B avec celui de A
             std::cout << "AB" << std::endl ;
             tabval[pa->numval].nb += tabval[pb->numval].nb;
             tabval[pb->numval].nb = 0 ;
-            p = ajoute_element (vtete, inda, pa, p);
+            delete_ind(vtete_c, pb->numlc, indb) ;
+            p = ajoute_element (vtete_l, inda, pa, p);
             pa = pa->next;
             pb = pb->next;
         }
         p->next = 0;
     }
-    vtete[indb] = 0;
+    vtete_l[indb] = 0;
 }
  
 void
@@ -228,9 +249,57 @@ matflux::supprime_zero(element* vtete[], int ind)
     element* pp;
 
     for (p = vtete[ind], pp = 0; p != 0; pp = p, p = p->next) {
-        std::cout << "Val : " << tabval[p->numval].nb << std::endl ;
         if (tabval[p->numval].nb == 0) {
             delete_element (vtete,ind, p, pp);
         }
+    }
+}
+
+void
+matflux::change_ind(element* vtete[], int ind, int indb, int inda)
+{
+    // Transforme indb en inda dans liste ind
+
+    std::cout << "CHANGE_IND : "<<vtete<<"/"<<ind<<"/"<<indb<<"/"<<inda<<std::endl ;
+    element* p ;
+    element* pp ;
+    element* pb = 0 ;
+    element* ppb = 0 ;
+
+    // cherche b
+    for (p = vtete[ind], pp = 0; p != 0 && p->numlc <= indb ; pp = p, p = p->next) {
+        if (p->numlc == indb) {
+            p->numlc = inda ;
+            pb = p;
+            ppb = pp ;
+        }
+    }
+
+    if (pb) {
+        delete_element(vtete,ind,pb,ppb)   ;
+        insert(vtete,ind,pb) ;
+    }
+}
+
+void
+matflux::delete_ind(element* vtete[], int ind, int indb)
+{
+    // Suuprime indb dans liste ind
+
+    std::cout << "SUPPR_IND : "<<vtete<<"/"<<ind<<"/"<<indb<<std::endl ;
+    element* p ;
+    element* pp ;
+    element* pb = 0 ;
+    element* ppb = 0 ;
+    // cherche b
+    for (p = vtete[ind], pp = 0; p != 0 && p->numlc <= indb ; pp = p, p = p->next) {
+        if (p->numlc == indb) {
+            pb = p;
+            ppb = pp ;
+        }
+    }
+
+    if (pb) {
+        delete_element(vtete,ind,pb,ppb)   ;
     }
 }
