@@ -17,11 +17,14 @@ public:
     int set_val (int w_lig,int w_col, int w_val);
     int get_val (int w_lig,int w_col);
     void imprime() ;
+    void merge (int inda, int indb) ;
     
 private:
+    element* ajoute_element (element* vtete[], int ind, element* pins, element* pp) ;
     element* insere_element (element* vtete[], int ind, element* pins, element* pp, element* p) ;
     element* delete_element (element* vtete[], int ind, element* p, element* pp) ;
-    int insert (element* vtete[], int ind, element* pelement) ;
+    int insert    (element* vtete[], int ind, element* pelement) ;
+    void merge_lc (element* vtete[], int inda, int indb ) ;
     
     const unsigned int dim ;
     int nbval  ;

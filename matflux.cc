@@ -79,10 +79,27 @@ void matflux::imprime ()
     }
 }
 
+void matflux::merge (int inda, int indb)
+{
+    merge_lc(tete_l,inda,indb) ;
+}
 
 //******************************************************************************
 // Fonctions élémentaires
 //******************************************************************************
+
+element *
+matflux::ajoute_element (element* vtete[], int ind, element* pins, element* pp)
+{
+    std::cout << "Insère element : (H)" << vtete << "\t" << pins <<
+        "\taprès" << pp << "\t" << std::endl;
+    if (vtete[ind] == 0 || pp == 0) {		// insertion en tête
+        vtete[ind] = pins;
+    } else {				// insertion après ppos
+        pp->next = pins;
+    }
+    return pins;
+}
 
 element *
 matflux::insere_element (element* vtete[], int ind, element* pins, element* pp,
@@ -94,11 +111,7 @@ matflux::insere_element (element* vtete[], int ind, element* pins, element* pp,
     //std::cout << "Insère element : (H)" << vtete << "\t" << pins <<
     //    "\taprès" << pp << "\tavant" << p << std::endl;
 
-    if (vtete[ind] == 0 || pp == 0) {		// insertion en tête
-        vtete[ind] = pins;
-    } else {				// insertion après ppos
-        pp->next = pins;
-    }
+    ajoute_element(vtete,ind, pins, pp) ;
     pins->next = p;				  // fait le lien vers l'avant
     return pins;
 }
@@ -151,3 +164,37 @@ matflux::insert (element* vtete[], int ind, element* pelement)
     }
     return 0;
 }
+
+void
+matflux::merge_lc (element* vtete[], int inda, int indb )
+{
+    element *p = 0;                        // pointeur sur la liste en cours de constitution
+    element *pa = vtete[inda];    // pointeur de la liste numdca
+    element *pb = vtete[indb];    // pointeur de la liste numdcb
+    // tant que les deux listes ne sont pas épuisées
+    while (pa != 0 || pb != 0) {
+        // std::cout << p << "/" << pa << "/" << pb << "/" << pa->numlc <<  "," << pb->numlc << std::endl ;
+        if ((pa != 0) && (pb == 0 || pa->numlc < pb->numlc)) {
+            std::cout << "A" << std::endl ;
+            // on prend dans la liste A
+            p = ajoute_element (vtete, inda, pa, p);
+            pa = pa->next;
+        } else if ((pb != 0) && (pa == 0 ||pb->numlc < pa->numlc)) {
+            std::cout << "B" << std::endl ;
+            // on prend dans la liste B
+            p = ajoute_element (vtete, inda, pb, p);
+            pb = pb->next;
+        } else {
+            // on cumule les element venant de B avec celui de A
+            std::cout << "AB" << std::endl ;
+            tabval[pa->numval].nb += tabval[pb->numval].nb;
+            tabval[pb->numval].nb = 0 ;
+            p = ajoute_element (vtete, inda, pa, p);
+            pa = pa->next;
+            pb = pb->next;
+        }
+        p->next = 0;
+    }
+    vtete[indb] = 0;
+}
+
