@@ -53,22 +53,10 @@ void calcul_lien_dual(matflux & mflux, std::vector<commune> & vcom, int numdc_c,
 
 float calcul_lien_elem(matflux & mflux, std::vector<commune> & vcom, int numdc_l, int numdc_c, int nb, const int type) {
     switch (type) {
-        case 0 :
-        {
-            return calcul_lien_elem_a0(mflux, vcom, numdc_l, numdc_c, nb) ;
-            break ;
-        }
-        case 1 :
-        {
-            return calcul_lien_elem_sta(mflux, vcom, numdc_l, numdc_c, nb) ;
-            break ;
-        }
-        default:
-        {
-            std::cerr << "Erreur type de lien" << std::endl ;
-            exit(1) ;
-        }
+        case 0 : return calcul_lien_elem_a0 (mflux, vcom, numdc_l, numdc_c, nb) ;
+        case 1 : return calcul_lien_elem_sta(mflux, vcom, numdc_l, numdc_c, nb) ;
     }
+    return 0;
 }
         
 

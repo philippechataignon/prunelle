@@ -30,7 +30,7 @@ matflux::~matflux ()
     delete[] elt_c  ;
 }
 
-int matflux::set_val (int w_lig,int w_col, int w_val)
+void matflux::set_val (int w_lig,int w_col, int w_val)
 {
     #ifdef DEBUG
         std::cout << "SET_VAL" << w_lig << "/" << w_col << "/" << w_val << std::endl ;

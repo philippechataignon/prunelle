@@ -53,7 +53,7 @@ void lecture_fich (std::ifstream & in, matflux & mflux, std::vector<commune> & v
 void calcul_lien_init(matflux & mflux, std::vector<commune> & vcom, int type)
 {
     std::cout << "Calcul des liens init" << std::endl ;
-    for (int i=0; i<vcom.size(); i++) {
+    for (unsigned int i=0; i<vcom.size(); i++) {
         calcul_lien(mflux, vcom, i, type) ;
     }
 }

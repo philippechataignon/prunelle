@@ -19,13 +19,13 @@ int main(int argc, char* argv[])
     std::ifstream in (argv[1]);
     if (in == 0) {
         std::cout << "Erreur : impossible d'ouvrir le fichier prunelle" << std::endl ;
-        exit(1);
+        std::exit(1);
     }
 
     std::ofstream out (argv[2]);
     if (out == 0) {
         std::cout << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
-        exit(1);
+        std::exit(1);
     }
 
     const int type = std::atoi(argv[3]) ;
@@ -61,8 +61,8 @@ int main(int argc, char* argv[])
         }
         fin = (sat == -1 || pole == -1 || maxlien < 1E-40) ;
         if (!fin) {
-            out << vcom[sat].nom << "\t" <<vcom[pole].nom << '\t' << maxlien ; 
-            // std::cout << "AGREG : " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << std::endl ; 
+            out << vcom[sat].nom << "\t" <<vcom[pole].nom << '\t' << maxlien << "\t"; 
+            std::cout << "AGREG : " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << std::endl ; 
 
             agrege(mflux,vcom,pole,sat) ;
             calcul_lien(mflux, vcom, pole, type) ;
