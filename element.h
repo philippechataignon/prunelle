@@ -15,6 +15,14 @@ public:
         numval = rhs.numval ;
     }
 
+    element operator = (const element & rhs) {
+        if (this != &rhs) {
+            numlc  = rhs.numlc  ;
+            numval = rhs.numval ;
+        }
+        return *this ;
+    }
+
     bool operator == (const element & rhs) const {
         return (numlc == rhs.numlc) ;
     }
