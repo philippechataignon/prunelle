@@ -1,5 +1,5 @@
 CC=g++
-CPPFLAGS=-O2 -pipe -fomit-frame-pointer
+CPPFLAGS=-O2 -march=athlon-xp -pipe -fomit-frame-pointer
 
 OBJ = prunelle.o globals.o matflux.o valeur.o element.o commune.o
 OBJTEST = test.o matflux.o valeur.o element.o
