@@ -1,0 +1,2 @@
+#! /bin/sh
+./traite_arbre.py < $1 | uniq -w5

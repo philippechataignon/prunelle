@@ -9,20 +9,6 @@ public:
     element() : numlc(-1), numval(-1) {}
     element (int w_numlc, int w_numval) : numlc(w_numlc), numval(w_numval), next(0) {}
 
-    
-    element(const element & rhs) {
-        numlc  = rhs.numlc  ;
-        numval = rhs.numval ;
-    }
-
-    element operator = (const element & rhs) {
-        if (this != &rhs) {
-            numlc  = rhs.numlc  ;
-            numval = rhs.numval ;
-        }
-        return *this ;
-    }
-
     bool operator == (const element & rhs) const {
         return (numlc == rhs.numlc) ;
     }

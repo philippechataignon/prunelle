@@ -79,3 +79,6 @@ void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb
     vcom[numdcb].status = 0 ;
 }
 
+void help()
+{
+}

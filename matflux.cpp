@@ -7,7 +7,7 @@
 //******************************************************************************
 
 matflux::matflux (int w_dim, int w_nbval):
-dim(w_dim),nbval(w_nbval),indval(0),indlig(0),indcol(0)
+dim(w_dim),nbval(w_nbval),indlig(0),indcol(0),indval(0)
 {
     tabval = new valeur[nbval] ;
     tete_l = new element*[dim] ;
@@ -58,14 +58,14 @@ int matflux::get_val (int w_lig,int w_col)
 
 void matflux::affiche()
 {
-    for (int i=0 ; i<dim ; i++) {
+    for (unsigned int i=0 ; i<dim ; i++) {
         std::cout << "Ligne " << i << " : " ;
         for (element* j=tete_l[i] ; j != 0 ; j=j->next) {
              std::cout << *j << "[" << tabval[j->numval] << "] | "  ;
         }
         std::cout << std::endl ;
     }
-    for (int i=0 ; i<dim ; i++) {
+    for (unsigned int i=0 ; i<dim ; i++) {
         std::cout << "Col " << i << " : " ;
         for (element* j=tete_c[i] ; j != 0 ; j=j->next) {
              std::cout << *j << "[" << tabval[j->numval] << "] | "  ;
