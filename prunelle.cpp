@@ -44,10 +44,16 @@ int main(int argc, char* argv[])
     matflux mflux (nbcom,nbflux);
     lecture_fich (in, mflux, vcom);
 
-    lien_es vlien(mflux,vcom) ;
+    lien* vlien ;
+
+    if (type == 0) {
+        vlien=new lien_aa(mflux,vcom) ;
+    } else if (type == 1) {
+        vlien=new lien_es(mflux,vcom) ;
+    }
     
     std::cout << "Calcul des liens init" << std::endl ;
-    vlien.calcul_init() ;
+    vlien->calcul_init() ;
     bool fin = false ;
     int cpt = 0;
 
@@ -56,7 +62,7 @@ int main(int argc, char* argv[])
         if ((cpt % 1000) == 0) {
             std::cout << "Itération n°" << cpt << std::endl ;
         }
-        float maxlien = vlien.val_init() ;
+        float maxlien = vlien->val_init() ;
         int sat = -1 ;
         int pole = -1 ;
         for(int i=0 ; i<nbcom; i++) {
@@ -70,7 +76,7 @@ int main(int argc, char* argv[])
                 maxlien = vcom[i].maxlien ;
             }
         }
-        fin = (sat == -1 || pole == -1 || maxlien<=vlien.val_stop() ) ;
+        fin = (sat == -1 || pole == -1 || maxlien<=vlien->val_stop() ) ;
         if (!fin) {
             out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << maxlien << "\t" << vcom[sat] << "\t" ; 
             std::cout << "AGREG : " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\n" ; 
@@ -78,7 +84,7 @@ int main(int argc, char* argv[])
             // calcul_lien     (mflux, vcom, pole, type) ;
             //calcul_lien_dual(mflux, vcom, pole, type) ;
             //calcul_lien_sim (mflux, vcom, pole, type) ;
-            vlien.calcul_sim (pole) ;
+            vlien->calcul_sim (pole) ;
             out << vcom[pole] << "\n" ; 
         }
     }

@@ -11,7 +11,7 @@ CXXFLAGS=-O3 -axK -xK -tpp6   -march=pentiumiii
 
 # OBJ = prunelle.o globals.o lien.o lien_elem.o matflux.o valeur.o element.o commune.o
 LIEN = lien_aa.o lien_es.o
-OBJ = prunelle.o globals.o class_lien.o matflux.o valeur.o element.o commune.o $(LIEN)
+OBJ = prunelle.o globals.o lien.o matflux.o valeur.o element.o commune.o $(LIEN)
 OBJTEST = test.o matflux.o valeur.o element.o
 OBJPREP = prepare_flux.o matflux.o valeur.o element.o commune.o
 

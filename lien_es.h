@@ -4,7 +4,7 @@
 #include <vector>
 #include "commune.h"
 #include "matflux.h"
-#include "class_lien.h"
+#include "lien.h"
 
 class lien_es : public lien 
 {
