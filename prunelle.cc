@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
     std::cout << "Prunelle V 8.01 - " << __DATE__ << " - " << __TIME__ <<
         std::endl;
 
-    if (argc != 2 ) {
+    if (argc != 3 ) {
         std::cout << "Entrer fichier prunelle\n";
         std::exit (0);
     }
@@ -22,11 +22,11 @@ int main(int argc, char* argv[])
         exit(1);
     }
 
-    // std::ofstream out (argv[2]);
-    // if (out == 0) {
-    //     std::cout << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
-    //     exit(1);
-    // }
+    std::ofstream out (argv[2]);
+    if (out == 0) {
+        std::cout << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
+        exit(1);
+    }
 
     int nbcom, nbflux ;
     in >> nbflux ;
@@ -38,10 +38,12 @@ int main(int argc, char* argv[])
     matflux mflux (nbcom,nbflux);
     lecture_fich (in, mflux, vcom);
     calcul_lien_init(mflux,vcom) ;
+    bool fin = false ;
+    int cpt = 0;
 
-    while (1) {
+    while (!fin && cpt++<(nbcom-1)) {
         float maxlien = -100.0 ;
-        int   dca = -1 ;
+        int dca = -1 ;
         int dcb = -1 ;
         for(int i=0 ; i<nbcom; i++) {
             if (vcom[i].status && vcom[i].maxlien > maxlien) {
@@ -50,8 +52,12 @@ int main(int argc, char* argv[])
                 dcb = vcom[i].dcmaxlien ;
             }
         }
-        std::cout << dca << "(" << vcom[dca].nom << ")"  << "\t" << dcb << "(" <<vcom[dcb].nom << ")" << '\t' << maxlien << std::endl ; 
-        agrege(mflux,vcom,dca,dcb) ;
-        calcul_lien_maj(mflux,vcom) ;
+        fin = (dca == -1 || dcb == -1 || maxlien < 1E-4) ;
+        if (!fin) {
+            //std::cout << "AGREG : " <<dca << "(" << vcom[dca].nom << ")"  
+            //    << "\t" << dcb << "(" <<vcom[dcb].nom << ")" << '\t' << maxlien << std::endl ; 
+            out << vcom[dca].nom << "\t" <<vcom[dcb].nom << '\t' << maxlien << std::endl ; 
+            agrege(mflux,vcom,dcb,dca) ;
+        }
     }
 }

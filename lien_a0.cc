@@ -4,41 +4,47 @@
 #include "matflux.h"
 #include "lien.h"
 
-void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdca)
+void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdc_l)
 {
-    int a0 = vcom[numdca].act ;
+    int a0 = vcom[numdc_l].act ;
     float maxlien = -1.0 ;
     int   dcmaxlien = -1 ;
     element* p ;
-    for (p = mflux.tete_l[numdca]; p != 0; p = p->next) {
-        int numdcb=p->numlc ;
-        if (numdca != numdcb && numdca && numdcb && a0) {
+    for (p = mflux.tete_l[numdc_l]; p != 0; p = p->next) {
+        int numdc_c=p->numlc ;
+            // std::cout << "LIEN : " <<numdc_l << "," <<numdc_c << std::endl ;
+        if (numdc_l != numdc_c && numdc_l && numdc_c && a0) {
             int numval=p->numval ;
             float lien = static_cast<float> (100*mflux.tabval[numval].nb)/a0 ;
             mflux.tabval[numval].lien = lien ;
+            // std::cout << numval << "/" << lien << std::endl ;
             if (lien > maxlien) {
                 maxlien = lien ;
-                dcmaxlien = numdcb ;
+                dcmaxlien = numdc_c ;
             }
         }
     }
-    vcom[numdca].maxlien = maxlien ;
-    vcom[numdca].dcmaxlien = dcmaxlien ;
-    vcom[numdca].status = 1 ;
+    vcom[numdc_l].maxlien = maxlien ;
+    vcom[numdc_l].dcmaxlien = dcmaxlien ;
+    vcom[numdc_l].status = 1 ;
 } 
 
-void calcul_lien_dual(matflux & mflux, std::vector<commune> & vcom, int numdcb)
+void calcul_lien_dual(matflux & mflux, std::vector<commune> & vcom, int numdc_c)
 {
-    float maxlien = -1.0 ;
-    int   dcmaxlien = -1 ;
     element* p ;
-    for (p = mflux.tete_c[numdcb]; p != 0; p = p->next) {
-        int numdca=p->numlc ;
-        int a0 = vcom[numdca].act ;
-        if (numdca != numdcb && numdca && numdcb && a0) {
+    for (p = mflux.tete_c[numdc_c]; p != 0; p = p->next) {
+        int numdc_l=p->numlc ;
+        // std::cout << "LIEN_DUAL : " <<numdc_l << "," <<numdc_c << std::endl ;
+        int a0 = vcom[numdc_l].act ;
+        if (numdc_l != numdc_c && numdc_l && numdc_c && a0) {
             int numval=p->numval ;
             float lien = static_cast<float> (100*mflux.tabval[numval].nb)/a0 ;
             mflux.tabval[numval].lien = lien ;
+            // std::cout << numval << "/" << lien << std::endl ;
+            if (lien > vcom[numdc_l].maxlien) {
+                vcom[numdc_l].maxlien = lien ;
+                vcom[numdc_l].dcmaxlien = numdc_c ;
+            }
         }
     }
 } 

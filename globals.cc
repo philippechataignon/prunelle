@@ -76,9 +76,9 @@ void prepare_calcul_max(matflux & mflux, std::vector<commune> & vcom, int numdca
     // for (p = mflux.tete_l[numdca]; p != 0; p = p->next) {
     //     vcom[p->numlc].status = 2 ;
     // }
-    for (p = mflux.tete_c[numdca]; p != 0; p = p->next) {
-        vcom[p->numlc].status = 2 ;
-    }
+    // for (p = mflux.tete_c[numdca]; p != 0; p = p->next) {
+    //    vcom[p->numlc].status = 2 ;
+    // }
     // for (p = mflux.tete_l[numdcb]; p != 0; p = p->next) {
     //     vcom[p->numlc].status = 2 ;
     // }
@@ -106,7 +106,9 @@ void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb
     vcom[numdca].emp = vcom[numdca].sta + vcom[numdca].ent;
     vcom[numdca].act = vcom[numdca].sta + vcom[numdca].sor;
     mflux.merge(numdca,numdcb) ;
-    prepare_calcul_max(mflux, vcom, numdca, numdcb) ;
+    //prepare_calcul_max(mflux, vcom, numdca, numdcb) ;
     vcom[numdcb].status = 0 ;
+    calcul_lien(mflux, vcom, numdca) ;
+    calcul_lien_dual(mflux, vcom, numdca) ;
 }
 
