@@ -7,7 +7,7 @@ class element
 {
 public:
     element() : numlc(-1), numval(-1) {}
-    element (int w_numlc, int w_numval) : numlc(w_numlc), numval(w_numval) {}
+    element (int w_numlc, int w_numval) : numlc(w_numlc), numval(w_numval), next(0) {}
 
     
     element(const element & rhs) {
@@ -28,6 +28,7 @@ friend std::ostream & operator << (std::ostream & os, const element & element);
 public:
     int   numlc  ;
     int   numval ;
+    element* next ;
 }
 ;
 

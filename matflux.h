@@ -1,15 +1,8 @@
 #ifndef matflux_h
 #define matflux_h
 
-#include <vector>
-#include <set>
-#include <iterator>
 #include "valeur.h" 
 #include "element.h" 
-
-typedef std::set<element> ligcol   ;
-typedef std::set<element>::iterator ligcol_iter   ;
-typedef std::vector<valeur> tabval ;
 
 class matflux
 {
@@ -26,13 +19,21 @@ public:
     void imprime() ;
     
 private:
-    int nbval  ;
-    int indval ;
+    element* insere_element (element* vtete[], int ind, element* pins, element* pp, element* p) ;
+    element* delete_element (element* vtete[], int ind, element* p, element* pp) ;
+    int insert (element* vtete[], int ind, element* pelement) ;
+    
     const unsigned int dim ;
+    int nbval  ;
+    int indlig ;
+    int indcol ;
+    int indval ;
 
-    std::vector<ligcol> lig ; 
-    std::vector<ligcol> col ;
-    tabval val ;
+    element*  elt_l  ;
+    element** tete_l ;
+    element*  elt_c  ;
+    element** tete_c ;
+    valeur*   tabval ;
 }
 ;
 #endif
