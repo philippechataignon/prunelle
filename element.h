@@ -11,7 +11,7 @@ public:
 
     
     element(const element & rhs) {
-        numlc  =    rhs.numlc ;
+        numlc  = rhs.numlc  ;
         numval = rhs.numval ;
     }
 

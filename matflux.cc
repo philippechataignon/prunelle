@@ -48,7 +48,7 @@ int matflux::set_val (int w_lig,int w_col, int w_val)
 int matflux::get_val (int w_lig,int w_col) 
 {
     int ret_val = 0 ;
-    for (element* i=tete_l[w_lig]; i !=0 && i->numlc <= w_col; i=i->next) {
+    for (element* i=tete_l[w_lig]; i !=0 && i->numlc >= w_col; i=i->next) {
         if (i->numlc == w_col) {
             ret_val = tabval[i->numval].nb ;
         }
@@ -145,7 +145,7 @@ matflux::insert (element* vtete[], int ind, element* pelement)
     bool insert_fait = false;
 
     for (p = vtete[ind], pp = 0; p != 0; pp = p, p = p->next) {
-        if (p->numlc > pelement->numlc) {
+        if (p->numlc < pelement->numlc) {
             // insertion au milieu entre pp et p, soit après pp
             insere_element (vtete,ind, pelement, pp, p);
             insert_fait = true;
@@ -169,14 +169,14 @@ matflux::merge_lc (element* vtete_l[], element* vtete_c[], int inda, int indb )
     // tant que les deux listes ne sont pas épuisées
     while (pa != 0 || pb != 0) {
         // std::cout << p << "/" << pa << "/" << pb << "/" << pa->numlc <<  "," << pb->numlc << std::endl ;
-        if ((pa != 0) && (pb == 0 || pa->numlc < pb->numlc)) {
+        if ((pa != 0) && (pb == 0 || pa->numlc > pb->numlc)) {
             #ifdef DEBUG
                 std::cout << "A" << std::endl ;
             #endif
             // on prend dans la liste A : cas le plus simple
             p = ajoute_element (vtete_l, inda, pa, p);
             pa = pa->next;
-        } else if ((pb != 0) && (pa == 0 ||pb->numlc < pa->numlc)) {
+        } else if ((pb != 0) && (pa == 0 ||pb->numlc > pa->numlc)) {
             #ifdef DEBUG
                 std::cout << "B" << std::endl ;
             #endif
@@ -216,7 +216,7 @@ matflux::change_ind(element* vtete[], int ind, int indb, int inda)
     element* ppb = 0 ;
 
     // cherche b
-    for (p = vtete[ind], pp = 0; p != 0 && p->numlc <= indb ; pp = p, p = p->next) {
+    for (p = vtete[ind], pp = 0; p != 0 && p->numlc >= indb ; pp = p, p = p->next) {
         if (p->numlc == indb) {
             p->numlc = inda ;
             pb = p;
@@ -243,7 +243,7 @@ matflux::delete_ind(element* vtete[], int ind, int indb)
     element* pb = 0 ;
     element* ppb = 0 ;
     // cherche b
-    for (p = vtete[ind], pp = 0; p != 0 && p->numlc <= indb ; pp = p, p = p->next) {
+    for (p = vtete[ind], pp = 0; p != 0 && p->numlc >= indb ; pp = p, p = p->next) {
         if (p->numlc == indb) {
             pb = p;
             ppb = pp ;
