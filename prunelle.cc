@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "globals.h"
+#include "lien.h"
 #include "commune.h"
 #include "matflux.h"
 
