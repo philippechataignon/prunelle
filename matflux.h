@@ -6,9 +6,7 @@
 #include "valeur.h" 
 #include "element.h" 
 #include "commune.h" 
-
-// typedef std::set<int> listent ;
-// typedef std::set<int>::iterator listent_iter ;
+#include "globals.h"
 
 class matflux
 {

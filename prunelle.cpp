@@ -8,9 +8,9 @@
 #include "commune.h"
 #include "matflux.h"
 #include "parse_opt.h"
+#include "utils.h"
 
-extern int verbeux ;
-int verbeux ;
+int verbeux = 0 ;
 
 int main(int argc, char* argv[])
 {
@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
     int nbcom, nbflux ;
     in >> nbflux ;
     in >> nbcom ;
-    std::cout << nbflux << "/" << nbcom << "/" << type <<std::endl ;
+    std::cout << nbflux << "/" << nbcom << "/" << type << "/" << ::verbeux <<std::endl ;
 
     std::vector<commune> vcom ;
     vcom.reserve(nbcom) ;
@@ -59,6 +59,8 @@ int main(int argc, char* argv[])
         vlien=new lien_aa(mflux,vcom) ;
     } else if (type == 1) {
         vlien=new lien_es(mflux,vcom) ;
+    } else if (type == 2) {
+        vlien=new lien_sta(mflux,vcom) ;
     }
     
     std::cout << "Calcul des liens init" << std::endl ;

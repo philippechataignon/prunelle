@@ -1,6 +1,6 @@
 #include <iostream>
 #include "matflux.h"
-
+int verbeux = 0;
 int main(int argc, char* argv[])
 {
     matflux mat(4,15) ;

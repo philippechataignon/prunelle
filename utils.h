@@ -1,5 +1,5 @@
-#ifndef GLOBALS_H
-#define GLOBALS_H
+#ifndef UTILS_H
+#define UTILS_H
 #include <iosfwd>
 #include <vector>
 #include "matflux.h"

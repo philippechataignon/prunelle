@@ -8,7 +8,7 @@
 
 #include "commune.h"
 #include "matflux.h"
-
+int verbeux = 0;
 int main(int argc, char* argv[])
 {
     std::cout << "Prépare_flux v1.00 - " << __DATE__ << " - " << __TIME__ <<

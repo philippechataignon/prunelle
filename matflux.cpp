@@ -34,9 +34,9 @@ matflux::~matflux ()
 
 void matflux::set_val (int w_lig,int w_col, int w_val)
 {
-    //if (::verbeux >= 3) {
-    //     std::cout << "SET_VAL" << w_lig << "/" << w_col << "/" << w_val << std::endl ;
-    //}
+    if (::verbeux >= 3) {
+         std::cout << "SET_VAL" << w_lig << "/" << w_col << "/" << w_val << std::endl ;
+    }
     int i_val = indval++ ;
     int i_lig = indlig++ ;
     int i_col = indcol++ ;
@@ -198,9 +198,9 @@ void
 matflux::change_ind(element* vtete[], int ind, int indb, int inda)
 {
     // Transforme indb en inda dans liste ind
-    // if (verbeux >=2) {
-    //     std::cout << "CHANGE_IND : "<<vtete<<"/"<<ind<<"/"<<indb<<"/"<<inda<<std::endl ;
-    // }
+    if (::verbeux >=2) {
+        std::cout << "CHANGE_IND : "<<vtete<<"/"<<ind<<"/"<<indb<<"/"<<inda<<std::endl ;
+    }
     element* p ;
     element* pp ;
     element* pb = 0 ;
@@ -225,9 +225,9 @@ void
 matflux::delete_ind(element* vtete[], int ind, int indb)
 {
     // Supprime indb dans liste ind
-    // if (verbeux >=2) {
-    //     std::cout << "SUPPR_IND : "<<vtete<<"/"<<ind<<"/"<<indb<<std::endl ;
-    // }
+    if (::verbeux >=2) {
+        std::cout << "SUPPR_IND : "<<vtete<<"/"<<ind<<"/"<<indb<<std::endl ;
+    }
     element* p ;
     element* pp ;
     element* pb = 0 ;
