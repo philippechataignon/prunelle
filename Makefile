@@ -12,7 +12,7 @@ CXXFLAGS=-O3 -axK -xK -tpp6   -march=pentiumiii
 
 # OBJ = prunelle.o globals.o lien.o lien_elem.o matflux.o valeur.o element.o commune.o
 LIEN = liens.o
-OBJ = prunelle.o getopt.o parse_opt.o utils.o lien.o matflux.o valeur.o element.o commune.o $(LIEN)
+OBJ = prunelle.o options.o utils.o lien.o matflux.o valeur.o element.o commune.o $(LIEN)
 OBJTEST = test.o matflux.o valeur.o element.o
 OBJPREP = prepare_flux.o matflux.o valeur.o element.o commune.o
 

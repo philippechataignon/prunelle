@@ -2,8 +2,6 @@
 #include "matflux.h"
 #include "valeur.h"
 
-// extern int verbeux ;
-
 //******************************************************************************
 // Constructeur matflux
 //******************************************************************************
@@ -34,9 +32,6 @@ matflux::~matflux ()
 
 void matflux::set_val (int w_lig,int w_col, int w_val)
 {
-    if (::verbeux >= 3) {
-         std::cout << "SET_VAL" << w_lig << "/" << w_col << "/" << w_val << std::endl ;
-    }
     int i_val = indval++ ;
     int i_lig = indlig++ ;
     int i_col = indcol++ ;
@@ -198,14 +193,10 @@ void
 matflux::change_ind(element* vtete[], int ind, int indb, int inda)
 {
     // Transforme indb en inda dans liste ind
-    if (::verbeux >=2) {
-        std::cout << "CHANGE_IND : "<<vtete<<"/"<<ind<<"/"<<indb<<"/"<<inda<<std::endl ;
-    }
     element* p ;
     element* pp ;
     element* pb = 0 ;
     element* ppb = 0 ;
-
     // cherche b
     for (p = vtete[ind], pp = 0; p != 0 && p->numlc >= indb ; pp = p, p = p->next) {
         if (p->numlc == indb) {
@@ -225,9 +216,6 @@ void
 matflux::delete_ind(element* vtete[], int ind, int indb)
 {
     // Supprime indb dans liste ind
-    if (::verbeux >=2) {
-        std::cout << "SUPPR_IND : "<<vtete<<"/"<<ind<<"/"<<indb<<std::endl ;
-    }
     element* p ;
     element* pp ;
     element* pb = 0 ;

@@ -2,51 +2,44 @@
 #include <iostream>
 #include <vector>
 
-#include "globals.h"
 #include "lien.h"
 #include "liens.h"
 #include "commune.h"
 #include "matflux.h"
-#include "parse_opt.h"
+#include "options.h"
 #include "utils.h"
-
-int verbeux = 0 ;
+#include "globals.h"
 
 int main(int argc, char* argv[])
 {
     std::cout << "Prunelle V 8.01 - " << __DATE__ << " - " << __TIME__ <<
         std::endl;
 
-    char f_in[128] ;
-    char f_out[128] ;
-    int  f_lien = 0 ;
+    options opt(argc,argv) ;
+    std::cout << opt.get_in() << std::endl ;
 
-    parse_opt(argc,argv,&::verbeux,f_in,f_out,&f_lien) ;
-
-    if (! *f_in) {
+    if (opt.get_in().empty()) {
         std::cout << "Erreur : pas de fichier indiqué en entrée (-i nom_fichier)" << std::endl ;
-        ::help() ;
+        opt.help() ;
         std::exit(1);
     }
 
-    std::ifstream in (f_in);
+    std::ifstream in (opt.get_in().c_str());
     if (in == 0) {
         std::cout << "Erreur : impossible d'ouvrir le fichier prunelle" << std::endl ;
         std::exit(1);
     }
 
-    std::ofstream out (f_out);
+    std::ofstream out (opt.get_out().c_str());
     if (out == 0) {
         std::cout << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
         std::exit(1);
     }
 
-    const int type = f_lien ;
-
     int nbcom, nbflux ;
     in >> nbflux ;
     in >> nbcom ;
-    std::cout << nbflux << "/" << nbcom << "/" << type << "/" << ::verbeux <<std::endl ;
+    std::cout << nbflux << "/" << nbcom << "/" << opt.get_typelien() << "/" << opt.get_verbeux() <<std::endl ;
 
     std::vector<commune> vcom ;
     vcom.reserve(nbcom) ;
@@ -54,17 +47,16 @@ int main(int argc, char* argv[])
     lecture_fich (in, mflux, vcom);
 
     lien* vlien ;
-
-    if (type == 0) {
-        vlien=new lien_aa(mflux,vcom) ;
-    } else if (type == 1) {
-        vlien=new lien_es(mflux,vcom) ;
-    } else if (type == 2) {
-        vlien=new lien_sta(mflux,vcom) ;
+    switch (opt.get_typelien()) {
+        case 1 : vlien=new lien_aa(mflux,vcom) ; break;
+        case 2 : vlien=new lien_es(mflux,vcom) ; break;
+        case 3 : vlien=new lien_sta(mflux,vcom) ; break;
+        default : vlien=new lien_aa(mflux,vcom) ; break;
     }
-    
+
     std::cout << "Calcul des liens init" << std::endl ;
     vlien->calcul_init() ;
+    
     bool fin = false ;
     int cpt = 0;
 
@@ -90,7 +82,7 @@ int main(int argc, char* argv[])
         fin = (sat == -1 || pole == -1 || maxlien<=vlien->val_stop() ) ;
         if (!fin) {
             out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << maxlien << "\t" << vcom[sat] << "\t" ; 
-            if (verbeux >= 1) {
+            if (opt.get_verbeux()  >= 1) {
                 std::cout << "AGR: " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\n" ; 
             }
             agrege(mflux,vcom,pole,sat) ;

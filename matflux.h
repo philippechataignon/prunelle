@@ -6,7 +6,6 @@
 #include "valeur.h" 
 #include "element.h" 
 #include "commune.h" 
-#include "globals.h"
 
 class matflux
 {
