@@ -23,7 +23,7 @@ void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdc_l, int 
     }
     vcom[numdc_l].maxlien = maxlien ;
     vcom[numdc_l].dcmaxlien = dcmaxlien ;
-    vcom[numdc_l].status = 1 ;
+    // vcom[numdc_l].status = 1 ;
 }
 
 void calcul_lien_dual(matflux & mflux, std::vector<commune> & vcom, int numdc_c, int type) {

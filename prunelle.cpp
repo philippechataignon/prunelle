@@ -43,8 +43,11 @@ int main(int argc, char* argv[])
     bool fin = false ;
     int cpt = 0;
 
+    std::cout << "Début boucle principale" << std::endl ;
     while (!fin && cpt++<(nbcom-1)) {
-        //mflux.affiche() ;
+        if ((cpt % 1000) == 0) {
+            std::cout << "Itération n°" << cpt << std::endl ;
+        }
         float maxlien = -100.0 ;
         int sat = -1 ;
         int pole = -1 ;
@@ -59,12 +62,12 @@ int main(int argc, char* argv[])
                 maxlien = vcom[i].maxlien ;
             }
         }
-        fin = (sat == -1 || pole == -1 || maxlien<=0) ;
+        fin = (sat == -1 || pole == -1 || maxlien<=0.01) ;
         if (!fin) {
-            out << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\t" << vcom[sat] << "\t" ; 
+            out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << maxlien << "\t" << vcom[sat] << "\t" ; 
             // std::cout << "AGREG : " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\n" ; 
             agrege(mflux,vcom,pole,sat) ;
-            calcul_lien(mflux, vcom, pole, type) ;
+            calcul_lien     (mflux, vcom, pole, type) ;
             calcul_lien_dual(mflux, vcom, pole, type) ;
             out << vcom[pole] << "\n" ; 
         }

@@ -3,7 +3,7 @@
 commune::commune (std::string w_nom):nom (w_nom)
 {
     ent = sor = act = emp = sta = 0;
-    status = 2;
+    status = 1;
     dcmaxlien = -1 ;
     maxlien = -1.0;
     nbagreg = 1 ;
