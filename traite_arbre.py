@@ -3,13 +3,13 @@ import re
 import sys
 
 def sortie(t,n,l,num) :
-    print n[:5],n[6:], num, l 
+    print n, num, l 
     if t.has_key(n) :
         filsg,filsd,l,num = t[n] ;
         sortie(t,filsg,l,num)
         sortie(t,filsd,l,num)
 
-p=re.compile(r'^(\S{5}_\S+)\s+(\S{5}_\S+)\s+(\S{5}_\S+)\s+(\S+)$') 
+p=re.compile(r'^(\S+_\S+)\s+(\S+_\S+)\s+(\S+_\S+)\s+(\S+)$') 
 
 sys.setrecursionlimit(40000) 
 t={}

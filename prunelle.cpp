@@ -40,6 +40,7 @@ int main(int argc, char* argv[])
     vcom.reserve(nbcom) ;
     matflux mflux (nbcom,nbflux);
     lecture_fich (in, mflux, vcom);
+    std::cout << "Calcul des liens init" << std::endl ;
     calcul_lien_init(mflux,vcom,type) ;
     bool fin = false ;
     int cpt = 0;

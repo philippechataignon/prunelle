@@ -1,0 +1,3 @@
+#! /bin/bash
+awk '{split($14,agra,"/");split($24,agrb,"/"); \
+      print $1"_" agrb[4],$1"_"(agrb[4]-1),$3"_"agra[4],$4;}' $1

@@ -6,21 +6,32 @@
 
 float calcul_lien_elem(matflux & mflux, std::vector<commune> & vcom, int numdc_l, int numdc_c, int nb, const int type) {
     switch (type) {
-        case 0 : return calcul_lien_elem_a0 (mflux, vcom, numdc_l, numdc_c, nb) ;
+        case 0 : return calcul_lien_elem_aa (mflux, vcom, numdc_l, numdc_c, nb) ;
         case 1 : return calcul_lien_elem_sta(mflux, vcom, numdc_l, numdc_c, nb) ;
         case 2 : return calcul_lien_elem_e0 (mflux, vcom, numdc_l, numdc_c, nb) ;
         case 3 : return calcul_lien_elem_es0(mflux, vcom, numdc_l, numdc_c, nb) ;
+        case 4 : return calcul_lien_elem_a0 (mflux, vcom, numdc_l, numdc_c, nb) ;
     }
     return 0;
 }
         
 
-float calcul_lien_elem_a0(matflux & mflux, std::vector<commune> & vcom, int numdc_l, int numdc_c, int nb)
+float calcul_lien_elem_aa(matflux & mflux, std::vector<commune> & vcom, int numdc_l, int numdc_c, int nb)
 {
     float lien = 0 ;
     int a0 = vcom[numdc_l].act ;
     if (a0) {
         lien = static_cast<float> (100*nb)/a0 ;
+    }
+    return lien ;
+} 
+
+float calcul_lien_elem_a0(matflux & mflux, std::vector<commune> & vcom, int numdc_l, int numdc_c, int nb)
+{
+    float lien = 0 ;
+    int s0 = vcom[numdc_l].sor ;
+    if (s0) {
+        lien = static_cast<float> (100*nb)/s0 ;
     }
     return lien ;
 } 

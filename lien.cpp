@@ -42,3 +42,10 @@ void calcul_lien_dual(matflux & mflux, std::vector<commune> & vcom, int numdc_c,
         }
     }
 }
+
+void calcul_lien_init(matflux & mflux, std::vector<commune> & vcom, int type)
+{
+    for (unsigned int i=0; i<vcom.size(); i++) {
+        calcul_lien(mflux, vcom, i, type) ;
+    }
+}

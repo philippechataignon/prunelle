@@ -24,7 +24,7 @@ public:
                          const commune & commune);
 
     std::string nom;
-    long ent, sor, sta, emp, act;
+    long ent, sor, sta, emp, act, mi, si;
       // status : 0 inactive ; 1 active avec max à jour ; (2 active avec max à calculer : non utilisé)
     short int status;
     int   dcmaxlien ;

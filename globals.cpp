@@ -37,6 +37,7 @@ void lecture_fich (std::ifstream & in, matflux & mflux, std::vector<commune> & v
             vcom[numdclt].ent += nb;
             vcom[numdclt].emp += nb;
         } else {
+            vcom[numdcr].si  += nb;
             vcom[numdcr].sta += nb;
             vcom[numdcr].act += nb;
             vcom[numdcr].emp += nb;
@@ -48,27 +49,23 @@ void lecture_fich (std::ifstream & in, matflux & mflux, std::vector<commune> & v
             last_avt = avt ;
         }
     }
-    std::cout << "Fin lecture fichier" << std::endl ;
-}
-
-void calcul_lien_init(matflux & mflux, std::vector<commune> & vcom, int type)
-{
-    std::cout << "Calcul des liens init" << std::endl ;
-    for (unsigned int i=0; i<vcom.size(); i++) {
-        calcul_lien(mflux, vcom, i, type) ;
-    }
 }
 
 void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb) 
 {
     // std::cout << "Agrégation" << std::endl ;
-    int nab = mflux.get_val(numdca,numdcb) ;
-    int nba = mflux.get_val(numdcb,numdca) ;
-    vcom[numdca].sta += vcom[numdcb].sta + nab + nba ;
-    vcom[numdca].ent += (vcom[numdcb].ent - nab - nba) ;
-    vcom[numdca].sor += (vcom[numdcb].sor - nab - nba) ;
+    // migrants internes = flux ab + flux ba
+    int mi  = mflux.get_val(numdca,numdcb) + mflux.get_val(numdcb,numdca) ;
+
+    vcom[numdca].mi  += vcom[numdcb].mi + mi ;
+    vcom[numdca].si  += vcom[numdcb].si ;
+    vcom[numdca].ent += vcom[numdcb].ent - mi ;
+    vcom[numdca].sor += vcom[numdcb].sor - mi ;
+
+    vcom[numdca].sta =  vcom[numdca].si + vcom[numdca].mi ;
     vcom[numdca].emp = vcom[numdca].sta + vcom[numdca].ent;
     vcom[numdca].act = vcom[numdca].sta + vcom[numdca].sor;
+
     mflux.merge(numdca,numdcb) ;
     vcom[numdca].nbagreg++ ;
     for (unsigned int i=0; i<vcom.size(); i++) {
