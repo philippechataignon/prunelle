@@ -2,6 +2,8 @@
 #include "matflux.h"
 #include "valeur.h"
 
+// extern int verbeux ;
+
 //******************************************************************************
 // Constructeur matflux
 //******************************************************************************
@@ -32,9 +34,9 @@ matflux::~matflux ()
 
 void matflux::set_val (int w_lig,int w_col, int w_val)
 {
-    #ifdef DEBUG
-        // std::cout << "SET_VAL" << w_lig << "/" << w_col << "/" << w_val << std::endl ;
-    #endif
+    //if (::verbeux >= 3) {
+    //     std::cout << "SET_VAL" << w_lig << "/" << w_col << "/" << w_val << std::endl ;
+    //}
     int i_val = indval++ ;
     int i_lig = indlig++ ;
     int i_col = indcol++ ;
@@ -168,18 +170,11 @@ matflux::merge_lc (element* vtete_l[], element* vtete_c[], int inda, int indb )
     element *pb = vtete_l[indb];    // pointeur de la liste numdcb
     // tant que les deux listes ne sont pas épuisées
     while (pa != 0 || pb != 0) {
-        // std::cout << p << "/" << pa << "/" << pb << "/" << pa->numlc <<  "," << pb->numlc << std::endl ;
         if ((pa != 0) && (pb == 0 || pa->numlc > pb->numlc)) {
-            #ifdef DEBUG
-                std::cout << "A" << std::endl ;
-            #endif
             // on prend dans la liste A : cas le plus simple
             p = ajoute_element (vtete_l, inda, pa, p);
             pa = pa->next;
         } else if ((pb != 0) && (pa == 0 ||pb->numlc > pa->numlc)) {
-            #ifdef DEBUG
-                std::cout << "B" << std::endl ;
-            #endif
             // on prend dans la liste B : il faut faire le changement d'indice dans le dual
             p = ajoute_element (vtete_l, inda, pb, p);
             change_ind(vtete_c, pb->numlc, indb, inda) ;
@@ -187,9 +182,6 @@ matflux::merge_lc (element* vtete_l[], element* vtete_c[], int inda, int indb )
         } else {
             // on cumule les elements venant de B avec celui de A : on supprime dans le dual
             // pour éviter les 0 inutiles 
-            #ifdef DEBUG
-                std::cout << "AB" << std::endl ;
-            #endif
             tabval[pa->numval].nb += tabval[pb->numval].nb;
             tabval[pb->numval].nb = 0 ;
             delete_ind(vtete_c, pb->numlc, indb) ;
@@ -206,10 +198,9 @@ void
 matflux::change_ind(element* vtete[], int ind, int indb, int inda)
 {
     // Transforme indb en inda dans liste ind
-
-    #ifdef DEBUG
-        std::cout << "CHANGE_IND : "<<vtete<<"/"<<ind<<"/"<<indb<<"/"<<inda<<std::endl ;
-    #endif
+    // if (verbeux >=2) {
+    //     std::cout << "CHANGE_IND : "<<vtete<<"/"<<ind<<"/"<<indb<<"/"<<inda<<std::endl ;
+    // }
     element* p ;
     element* pp ;
     element* pb = 0 ;
@@ -233,11 +224,10 @@ matflux::change_ind(element* vtete[], int ind, int indb, int inda)
 void
 matflux::delete_ind(element* vtete[], int ind, int indb)
 {
-    // Suuprime indb dans liste ind
-
-    #ifdef DEBUG
-        std::cout << "SUPPR_IND : "<<vtete<<"/"<<ind<<"/"<<indb<<std::endl ;
-    #endif
+    // Supprime indb dans liste ind
+    // if (verbeux >=2) {
+    //     std::cout << "SUPPR_IND : "<<vtete<<"/"<<ind<<"/"<<indb<<std::endl ;
+    // }
     element* p ;
     element* pp ;
     element* pb = 0 ;

@@ -9,6 +9,9 @@
 #include "matflux.h"
 #include "parse_opt.h"
 
+extern int verbeux ;
+int verbeux ;
+
 int main(int argc, char* argv[])
 {
     std::cout << "Prunelle V 8.01 - " << __DATE__ << " - " << __TIME__ <<
@@ -16,10 +19,9 @@ int main(int argc, char* argv[])
 
     char f_in[128] ;
     char f_out[128] ;
-    int  verbeux = 1;
     int  f_lien = 0 ;
 
-    parse_opt(argc,argv,&verbeux,f_in,f_out,&f_lien) ;
+    parse_opt(argc,argv,&::verbeux,f_in,f_out,&f_lien) ;
 
     if (! *f_in) {
         std::cout << "Erreur : pas de fichier indiqué en entrée (-i nom_fichier)" << std::endl ;
