@@ -49,22 +49,20 @@ int main(int argc, char* argv[])
             set_com.insert(codelt) ;
         }
     }
-    std::cout << "Fin lecture fichier flux (Passe 1)" << std::endl ;
+    
     nbflux-- ;
     std::cout << "Nb flux non nuls : " << nbflux << " - Taille : " << set_com.size() << std::endl ;
+    std::cout << "Ecriture liste communes" << std::endl ;
 
-    // out << "# PRUNELLE" << "\n" ;
-    // out << "# Nombre de flux" << "\n" ;
     out << nbflux << "\n" ;
-    // out << "# Nombre de zones" << "\n" ;
     out << set_com.size() << "\n" ;
-    // out << "# Liste des " << set_com.size() << " zones : num code" << "\n" ;
 
-    for (std::set<std::string>::iterator i=set_com.begin() ; i != set_com.end() ; i++) {
-        out << std::distance(set_com.begin(),i) << "\t" << *i << "\n" ;
+    int i = 0 ;
+    for (std::set<std::string>::iterator p=set_com.begin() ; p != set_com.end() ; p++) {
+        out << i << "\t" << *p << "\n" ;
+        i++ ;
     }
-
-    // out << "# Liste des " << nbflux << " flux : numr numlt nb" << "\n" ;
+    
     flu.clear() ;
     flu.seekg (0) ;
 
@@ -74,9 +72,6 @@ int main(int argc, char* argv[])
     std::copy(set_com.begin(), set_com.end(), back_inserter(vcom)) ;
     
     std::cout << "Début lecture fichier flux (Passe2)" << std::endl ;
-    int cpt = 0 ;
-    int avt = 0 ;
-    int last_avt = 0 ;
     while (flu) {
         std::string coder;
         std::string codelt;
@@ -84,19 +79,11 @@ int main(int argc, char* argv[])
         flu >> coder >> codelt >> nb;
 
         if (!coder.empty () && nb!= 0) {
-            //std::set<std::string>::iterator r = set_com.find(coder) ;
-            //std::set<std::string>::iterator lt = set_com.find(codelt) ;
-            int numdcr =  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),coder)) ;
-            int numdclt=  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),codelt)) ;
-            //int numdcr  = set_com.find(coder) ;
-            //int numdclt = set_com.find(codelt) ;
-            out << numdcr << "\t" << numdclt << "\t" << nb << "\n" ; 
-            cpt++ ;
-        }
-        avt = (100 * cpt) / nbflux ;
-        if (avt != last_avt) {
-            std::cout << "Avancement : " << avt << "%" << std::endl ;
-            last_avt = avt ;
+            out <<  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),coder)) 
+                << "\t"
+                <<  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),codelt)) 
+                << "\t" << nb << "\n" ; 
+                ;
         }
     }
     std::cout << "Fin lecture fichier flux" << std::endl ;
