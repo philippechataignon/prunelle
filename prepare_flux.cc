@@ -1,31 +1,13 @@
+#include <algorithm>
 #include <fstream>
 #include <iterator>
-#include <algorithm>
-#include <vector>
-#include <string>
-#include <utility>
-#include <cmath>
 #include <set>
+#include <string>
+#include <vector>
 
 #include "commune.h"
 #include "matflux.h"
 
-void lecture_commune(std::vector<commune> & vcom , std::ifstream & com)
-{
-    std::cout << "Début lecture fichier nom des communes" << std::endl;
-    while (com) {
-        std::string code;
-        std::string nom;
-        com >> code;
-        com >> std::ws >> nom;
-
-        if (!code.empty ())
-            vcom.push_back (commune (code, nom));
-    }
-    std::cout << "Fin lecture fichier nom des communes" << std::endl;
-}
-
-  
 int main(int argc, char* argv[])
 {
     std::cout << "Prépare_flux v1.00 - " << __DATE__ << " - " << __TIME__ <<
@@ -66,20 +48,21 @@ int main(int argc, char* argv[])
         }
     }
     std::cout << "Fin lecture fichier flux (Passe 1)" << std::endl ;
+    nbflux-- ;
     std::cout << "Nb flux non nuls : " << nbflux << " - Taille : " << set_com.size() << std::endl ;
 
-    out << "# PRUNELLE" << "\n" ;
-    out << "# Nombre de flux" << "\n" ;
+    // out << "# PRUNELLE" << "\n" ;
+    // out << "# Nombre de flux" << "\n" ;
     out << nbflux << "\n" ;
-    out << "# Nombre de zones" << "\n" ;
+    // out << "# Nombre de zones" << "\n" ;
     out << set_com.size() << "\n" ;
-    out << "# Liste des " << set_com.size() << " zones : num code" << "\n" ;
+    // out << "# Liste des " << set_com.size() << " zones : num code" << "\n" ;
 
     for (std::set<std::string>::iterator i=set_com.begin() ; i != set_com.end() ; i++) {
         out << std::distance(set_com.begin(),i) << "\t" << *i << "\n" ;
     }
 
-    out << "# Liste des " << nbflux << " flux : numr numlt nb" << "\n" ;
+    // out << "# Liste des " << nbflux << " flux : numr numlt nb" << "\n" ;
     flu.clear() ;
     flu.seekg (0) ;
 

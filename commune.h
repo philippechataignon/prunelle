@@ -7,24 +7,19 @@
 class commune
 {
 public:
-  commune (std::string w_code = "00000", std::string w_nom = "");
+  commune (std::string w_nom = "");
 
   bool operator == (const commune & rhs) const {
-    return code == rhs.code;
+    return nom == rhs.nom;
   }
   bool operator < (const commune & rhs) const
   {
-    return code < rhs.code;
-  }
-  bool operator != (const commune & rhs) const
-  {
-    return code != rhs.code;
+    return nom < rhs.nom;
   }
 
   friend std::ostream & operator << (std::ostream & os,
 				     const commune & commune);
 
-  std::string code;
   std::string nom;
   long ent, sor, sta, emp, act;
   short int status;
