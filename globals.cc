@@ -11,16 +11,20 @@ void lecture_fich (std::ifstream & in, matflux & mflux, std::vector<commune> & v
 {
     int nbflux = mflux.get_nbval() ;
     int nbcom  = mflux.get_dim()   ;
+    int avt = 0 ;
+    int last_avt = -1 ;
+    
     std::cout << "Lecture zones" << std::endl ;
     std::string nom ;
     int tmp ;
+    
     for (int i=0 ; i<nbcom  ; i++) {
         in >> tmp >> nom ;
         // std::cout << nom << std::endl ;
         vcom.push_back(commune(nom)) ;
     }
     int numdcr, numdclt, nb ;
-    std::cout << "Lecture flux" << std::endl ;
+    std::cout << "Lecture flux :" << std::endl ;
     for (int i=0 ; i<nbflux ; i++) {
         in >> numdcr >> numdclt >> nb ;
         mflux.set_val(numdcr, numdclt, nb) ;
@@ -34,15 +38,22 @@ void lecture_fich (std::ifstream & in, matflux & mflux, std::vector<commune> & v
             vcom[numdcr].act += nb;
             vcom[numdcr].emp += nb;
         }
+        avt = (100 * i) / nbflux ;
+        if (avt != last_avt) {
+            std::cout << avt << "% ";
+            std::cout.flush() ;
+            last_avt = avt ;
+        }
     }
     std::cout << "Fin lecture fichier" << std::endl ;
 }
 
 void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdca)
 {
-    std::cout << "Calcul des liens pour " << vcom[numdca].nom << std::endl ;
     int a0 = vcom[numdca].act ;
     int s0 = vcom[numdca].sta ;
+    float maxlien = -1.0 ;
+    int   dcmaxlien = -1 ;
     element* p ;
     for (p = mflux.tete_l[numdca]; p != 0; p = p->next) {
         int numdcb=p->numlc ;
@@ -51,12 +62,21 @@ void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdca)
         int s1 = vcom[numdcb].sta ;
         int sab = s0 + s1 + mflux.tabval[numval].nb + mflux.get_val(numdcb,numdca) ;
 
-        mflux.tabval[numval].lien = static_cast<float> (sab) / (a0+a1) - static_cast<float>(s0)/a0 ;
+        float lien = static_cast<float> (100*sab) / (a0+a1) - static_cast<float>(100*s0)/a0 ;
+        mflux.tabval[numval].lien = lien ;
+        if (lien > maxlien) {
+            maxlien = lien ;
+            dcmaxlien = numdcb ;
+        }
     }
+    vcom[numdca].maxlien = maxlien ;
+    vcom[numdca].dcmaxlien = dcmaxlien ;
+    vcom[numdca].status = 1 ;
 } 
 
 void calcul_lien(matflux & mflux, std::vector<commune> & vcom)
 {
+    std::cout << "Calcul des liens" << std::endl ;
     for (int i=0; i<vcom.size(); i++) {
         calcul_lien(mflux, vcom, i) ;
     }

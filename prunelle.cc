@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
     std::cout << "Prunelle V 8.00 - " << __DATE__ << " - " << __TIME__ <<
         std::endl;
 
-    if (argc != 4 ) {
+    if (argc != 3 ) {
         std::cout << "Entrer fichier prunelle, fichier sortie et type de lien\n";
         std::cout << "Types de lien :\n";
         std::cout << "0 : flux(A,B)/act(A)\n1 : (flux(A,B)+flux(B,A)/act(A)+act(B))\n2 : flux(A,B)/sor(A)\n" ;

@@ -22,8 +22,9 @@ public:
 
   std::string nom;
   long ent, sor, sta, emp, act;
+  // status : 0 inactive ; 1 active avec max à jour ; 2 active avec max à calculer
   short int status;
-  int numdcmax ;
-  float lienmax;
+  int   dcmaxlien ;
+  float maxlien;
 };
 #endif
