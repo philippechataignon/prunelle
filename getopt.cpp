@@ -27,7 +27,11 @@ getopt(int argc, char* argv[], char* opts)
 			return(EOF);
 		}
 	optopt = c = argv[optind][sp];
-	if(c == ':' || (cp=index(opts, c)) == 0) {
+#if defined(_WIN32) || defined(__BORLANDC__)
+	if(c == ':' || (cp=strchr(opts, c)) == 0) {
+#else
+	if(c == ':' || (cp=index(opts, c)) == 0)  {
+#endif
 		printf("%s : illegal option -- %c",argv[0], c);
 		if(argv[optind][++sp] == '\0') {
 			optind++;
