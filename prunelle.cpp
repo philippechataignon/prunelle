@@ -7,6 +7,9 @@
 #include "commune.h"
 #include "matflux.h"
 
+#include "lien_aa.h"
+#include "lien_es.h"
+
 int main(int argc, char* argv[])
 {
     std::cout << "Prunelle V 8.01 - " << __DATE__ << " - " << __TIME__ <<
@@ -40,8 +43,11 @@ int main(int argc, char* argv[])
     vcom.reserve(nbcom) ;
     matflux mflux (nbcom,nbflux);
     lecture_fich (in, mflux, vcom);
+
+    lien_es vlien(mflux,vcom) ;
+    
     std::cout << "Calcul des liens init" << std::endl ;
-    calcul_lien_init(mflux,vcom,type) ;
+    vlien.calcul_init() ;
     bool fin = false ;
     int cpt = 0;
 
@@ -50,7 +56,7 @@ int main(int argc, char* argv[])
         if ((cpt % 1000) == 0) {
             std::cout << "Itération n°" << cpt << std::endl ;
         }
-        float maxlien = -100.0 ;
+        float maxlien = vlien.val_init() ;
         int sat = -1 ;
         int pole = -1 ;
         for(int i=0 ; i<nbcom; i++) {
@@ -64,14 +70,15 @@ int main(int argc, char* argv[])
                 maxlien = vcom[i].maxlien ;
             }
         }
-        fin = (sat == -1 || pole == -1 || maxlien<=0.01) ;
+        fin = (sat == -1 || pole == -1 || maxlien<=vlien.val_stop() ) ;
         if (!fin) {
             out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << maxlien << "\t" << vcom[sat] << "\t" ; 
             std::cout << "AGREG : " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\n" ; 
             agrege(mflux,vcom,pole,sat) ;
             // calcul_lien     (mflux, vcom, pole, type) ;
             //calcul_lien_dual(mflux, vcom, pole, type) ;
-            calcul_lien_sim (mflux, vcom, pole, type) ;
+            //calcul_lien_sim (mflux, vcom, pole, type) ;
+            vlien.calcul_sim (pole) ;
             out << vcom[pole] << "\n" ; 
         }
     }

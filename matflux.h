@@ -28,9 +28,7 @@ public:
     void affiche() ;
     void merge (int inda, int indb) ;
     
-    friend void calcul_lien(matflux & mflux, std::vector<commune> & vcom, int numdca, const int type) ;
-    friend void calcul_lien_dual(matflux & mflux, std::vector<commune> & vcom, int numdca, const int type) ;
-    friend void calcul_lien_sim(matflux & mflux, std::vector<commune> & vcom, int numdca, const int type) ;
+    friend class lien ;
 private:
     element* ajoute_element (element* vtete[], int ind, element* pins, element* pp) ;
     element* insere_element (element* vtete[], int ind, element* pins, element* pp, element* p) ;
