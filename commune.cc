@@ -10,9 +10,10 @@ commune::commune (std::string w_nom):nom (w_nom)
 
 std::ostream & operator << (std::ostream & os, const commune & com)
 {
-    os << "Nom : " << com.nom << "\n"
-       << "Status/Dcmax/Lienmax : " << com.status << "\t" << com.numdcmax << "\t" << com.lienmax << "\n"
-       << "act/emp/sta/ent/sor" << "\t" << com.act << "\t" << com.emp << "\t" 
-       << com.sta << "\t" << com.ent << "\t" << com.sor << "\n";
+    os << com.nom << "\t"  
+       << "AcEmStEnSo : " << com.act << "/" << com.emp << "/"
+       << com.sta << "/"  << com.ent << "/" << com.sor  << "\t"
+       << "StDmLm : "     << com.status << "/" << com.numdcmax << "/" << com.lienmax << "\t"
+       ;
     return os ;
 }

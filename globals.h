@@ -4,5 +4,7 @@
 #include <fstream>
 #include "matflux.h"
 #include "commune.h"
-void lecture_flux (std::ifstream & in, matflux & mflux, std::vector<commune> & vcom, int nbflux, int nbcom);
+
+void lecture_fich (std::ifstream & in, matflux & mflux, std::vector<commune> & vcom, int nbflux, int nbcom);
+
 #endif

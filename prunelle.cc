@@ -17,8 +17,8 @@ int main(int argc, char* argv[])
         std::exit (0);
     }
 
-    std::ifstream flu (argv[1]);
-    if (flu == 0) {
+    std::ifstream in (argv[1]);
+    if (in == 0) {
         std::cout << "Erreur : impossible d'ouvrir le fichier prunelle" << std::endl ;
         exit(1);
     }
@@ -30,12 +30,16 @@ int main(int argc, char* argv[])
     }
 
     int nbcom, nbflux ;
-    flu >> nbflux ;
-    flu >> nbcom ;
+    in >> nbflux ;
+    in >> nbcom ;
     std::cout << nbflux << "/" << nbcom << std::endl ;
 
     std::vector<commune> vcom ;
     vcom.reserve(nbcom) ;
     matflux mflux (nbcom,nbflux);
-    lecture_flux (flu, mflux, vcom, nbflux, nbcom);
+    lecture_fich (in, mflux, vcom, nbflux, nbcom);
+
+    for(int i=0 ; i<nbcom; i++) {
+        std::cout << vcom[i] << std::endl ;
+    }
 }
