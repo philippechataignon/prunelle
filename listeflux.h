@@ -71,5 +71,6 @@ private:
     flux **maxp;		// tableau des pointeurs sur le flux maximum en ligne
     bool  *maxflag;		// 
     flux *vflux;		// tableau des flux
-} ;
+}
+;
 #endif
