@@ -56,9 +56,10 @@ int main(int argc, char* argv[])
 
     std::cout << "Calcul des liens init" << std::endl ;
     vlien->calcul_init() ;
-    
+
     bool fin = false ;
     int cpt = 0;
+    float prev_maxlien =  vlien->val_init() ;
 
     std::cout << "Début boucle principale" << std::endl ;
     while (!fin && cpt++<(nbcom-1)) {
@@ -71,7 +72,7 @@ int main(int argc, char* argv[])
         for(int i=0 ; i<nbcom; i++) {
             if (vcom[i].status && 
                     (vcom[i].maxlien > maxlien || 
-                        (sat != -1 && vcom[i].maxlien==maxlien && vcom[i].act < vcom[sat].act)
+                     (sat != -1 && vcom[i].maxlien==maxlien && vcom[i].act < vcom[sat].act)
                     )
                ) {
                 sat = i ;
@@ -81,14 +82,21 @@ int main(int argc, char* argv[])
         }
         fin = (sat == -1 || pole == -1 || maxlien<=vlien->val_stop() ) ;
         if (!fin) {
-            out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << maxlien << "\t" << vcom[sat] << "\t" ; 
+            float rebond = 0 ;
+            if (maxlien > prev_maxlien && cpt != 1) {
+                rebond = maxlien - prev_maxlien ;
+            } else {
+                rebond = 0 ;
+            }
+            out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << maxlien << "\t" << rebond << "\t" << vcom[sat] << "\t" ; 
             if (opt.get_verbeux()  >= 1) {
-                std::cout << "AGR: " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\n" ; 
+                std::cout << "AGR: " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\t" << rebond << "\n" ; 
             }
             agrege(mflux,vcom,pole,sat) ;
             vlien->calcul_sim (pole) ;
             out << vcom[pole] << "\n" ; 
         }
+        prev_maxlien = maxlien ;
     }
     return 0;
 }
