@@ -28,6 +28,8 @@ int main(int argc, char* argv[])
         exit(1);
     }
 
+    int type = 0;
+
     int nbcom, nbflux ;
     in >> nbflux ;
     in >> nbcom ;
@@ -37,19 +39,19 @@ int main(int argc, char* argv[])
     vcom.reserve(nbcom) ;
     matflux mflux (nbcom,nbflux);
     lecture_fich (in, mflux, vcom);
-    calcul_lien_init(mflux,vcom) ;
+    calcul_lien_init(mflux,vcom,type) ;
     bool fin = false ;
     int cpt = 0;
 
     while (!fin && cpt++<(nbcom-1)) {
+        //mflux.imprime() ;
         float maxlien = -100.0 ;
         int dca = -1 ;
         int dcb = -1 ;
         for(int i=0 ; i<nbcom; i++) {
             if (vcom[i].status && 
                     (vcom[i].maxlien > maxlien || 
-                        //(dca != -1 && vcom[i].maxlien>= maxlien - 1e-3 && vcom[i].act > vcom[dca].act)
-                    0
+                        (dca != -1 && vcom[i].maxlien>= maxlien - 1e-3 && vcom[i].act > vcom[dca].act)
                     )
                 ) {
                 dca = i ;
@@ -57,10 +59,7 @@ int main(int argc, char* argv[])
                 maxlien = vcom[i].maxlien ;
             }
         }
-        
-        std::cout << dca  << "::" << dcb << "::" << maxlien <<std::endl ;
         fin = (dca == -1 || dcb == -1 || maxlien < 1E-40) ;
-        std::cout << fin << std::endl ;
         if (!fin) {
             std::cout << "AGREG : " << vcom[dca].nom << "\t" <<vcom[dcb].nom << '\t' << maxlien << std::endl ; 
             out << vcom[dca].nom << "\t" <<vcom[dcb].nom << '\t' << maxlien << std::endl ; 

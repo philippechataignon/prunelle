@@ -50,49 +50,12 @@ void lecture_fich (std::ifstream & in, matflux & mflux, std::vector<commune> & v
     std::cout << "Fin lecture fichier" << std::endl ;
 }
 
-void calcul_lien_init(matflux & mflux, std::vector<commune> & vcom)
+void calcul_lien_init(matflux & mflux, std::vector<commune> & vcom, int type)
 {
     std::cout << "Calcul des liens init" << std::endl ;
     for (int i=0; i<vcom.size(); i++) {
         calcul_lien(mflux, vcom, i) ;
     }
-}
-
-void calcul_lien_maj(matflux & mflux, std::vector<commune> & vcom)
-{
-    std::cout << "Calcul des liens maj" << std::endl ;
-    for (int i=0; i<vcom.size(); i++) {
-        if (vcom[i].status == 2) {
-            calcul_lien(mflux, vcom, i) ;
-            calcul_lien_dual(mflux, vcom, i) ;
-        }
-    }
-}
-
-void prepare_calcul_max(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb)
-{
-    element* p ;
-    vcom[numdca].status = 2 ;
-    // for (p = mflux.tete_l[numdca]; p != 0; p = p->next) {
-    //     vcom[p->numlc].status = 2 ;
-    // }
-    // for (p = mflux.tete_c[numdca]; p != 0; p = p->next) {
-    //    vcom[p->numlc].status = 2 ;
-    // }
-    // for (p = mflux.tete_l[numdcb]; p != 0; p = p->next) {
-    //     vcom[p->numlc].status = 2 ;
-    // }
-    // for (p = mflux.tete_c[numdcb]; p != 0; p = p->next) {
-    //     vcom[p->numlc].status = 2 ;
-    // }
-    
-    int cpt = 0 ;
-    for (int i=0; i<vcom.size(); i++) {
-        if (vcom[i].status == 2) {
-            cpt++ ;
-        }
-    }
-    std::cout << "Nb de com en statut 2 : " << cpt << std::endl ;
 }
 
 void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb) 
@@ -106,7 +69,6 @@ void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb
     vcom[numdca].emp = vcom[numdca].sta + vcom[numdca].ent;
     vcom[numdca].act = vcom[numdca].sta + vcom[numdca].sor;
     mflux.merge(numdca,numdcb) ;
-    //prepare_calcul_max(mflux, vcom, numdca, numdcb) ;
     vcom[numdcb].status = 0 ;
     calcul_lien(mflux, vcom, numdca) ;
     calcul_lien_dual(mflux, vcom, numdca) ;
