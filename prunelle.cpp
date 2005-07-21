@@ -10,25 +10,17 @@
 #include "utils.h"
 #include "globals.h"
 
+// $Id: prunelle.cpp 52 2005-07-21 10:41:14Z philippe $
+
+
 int main(int argc, char* argv[])
 {
-    std::cout << "Prunelle V 8.01 - " << __DATE__ << " - " << __TIME__ <<
-        std::endl;
+    std::sting rev = "$Revision" ;
+    std::cout << "Prunelle - (c) 2005 Philippe CHATAIGNON" << "\n" << 
+    << __DATE__ << " - " << __TIME__ << std::endl;
 
     options opt(argc,argv) ;
     std::cout << opt.get_in() << std::endl ;
-
-    if (opt.get_in().empty()) {
-        std::cout << "Erreur : pas de fichier indiqué en entrée (-i nom_fichier)" << std::endl ;
-        opt.help() ;
-        std::exit(1);
-    }
-
-    std::ifstream in (opt.get_in().c_str());
-    if (in == 0) {
-        std::cout << "Erreur : impossible d'ouvrir le fichier prunelle" << std::endl ;
-        std::exit(1);
-    }
 
     std::ofstream out (opt.get_out().c_str());
     if (out == 0) {
@@ -37,20 +29,25 @@ int main(int argc, char* argv[])
     }
 
     int nbcom, nbflux ;
-    in >> nbflux ;
-    in >> nbcom ;
+    std::cin >> nbflux ;
+    std::cin >> nbcom ;
     std::cout << nbflux << "/" << nbcom << "/" << opt.get_typelien() << "/" << opt.get_verbeux() <<std::endl ;
 
     std::vector<commune> vcom ;
     vcom.reserve(nbcom) ;
     matflux mflux (nbcom,nbflux);
-    lecture_fich (in, mflux, vcom);
+    lecture_fich (std::cin, mflux, vcom);
+
+    for (int i=0; i<vcom.size(); i++) {
+        out << vcom[i] << "\n" ;
+    }
 
     lien* vlien ;
     switch (opt.get_typelien()) {
         case 1 : vlien=new lien_aa(mflux,vcom) ; break;
         case 2 : vlien=new lien_es(mflux,vcom) ; break;
         case 3 : vlien=new lien_sta(mflux,vcom) ; break;
+        case 4 : vlien=new lien_phc(mflux,vcom) ; break;
         default : vlien=new lien_aa(mflux,vcom) ; break;
     }
 
@@ -80,7 +77,7 @@ int main(int argc, char* argv[])
                 maxlien = vcom[i].maxlien ;
             }
         }
-        fin = (sat == -1 || pole == -1 || maxlien<=vlien->val_stop() ) ;
+        fin = (sat == -1 || pole == -1 || maxlien<=vlien->val_stop() || maxlien<opt.get_valmax() ) ;
         if (!fin) {
             float rebond = 0 ;
             if (maxlien > prev_maxlien && cpt != 1) {
@@ -88,7 +85,8 @@ int main(int argc, char* argv[])
             } else {
                 rebond = 0 ;
             }
-            out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << maxlien << "\t" << rebond << "\t" << vcom[sat] << "\t" ; 
+            // out << pole << '\t' << sat << '\t' << maxlien << "\t" << rebond << "\n" ; 
+            out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << maxlien << "\t" << rebond << "\t" << vcom[sat] << "\t";
             if (opt.get_verbeux()  >= 1) {
                 std::cout << "AGR: " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\t" << rebond << "\n" ; 
             }

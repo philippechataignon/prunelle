@@ -6,5 +6,5 @@
 #include "commune.h"
 
 void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb) ;
-void lecture_fich (std::ifstream & in, matflux & mflux, std::vector<commune> & vcom);
+void lecture_fich (std::istream & in, matflux & mflux, std::vector<commune> & vcom);
 #endif

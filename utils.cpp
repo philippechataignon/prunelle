@@ -10,7 +10,7 @@
 #include "lien.h"
 #include "utils.h"
 
-void lecture_fich (std::ifstream & in, matflux & mflux, std::vector<commune> & vcom)
+void lecture_fich (std::istream & in, matflux & mflux, std::vector<commune> & vcom)
 {
     int nbflux = mflux.get_nbval() ;
     int nbcom  = mflux.get_dim()   ;

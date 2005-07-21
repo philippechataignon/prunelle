@@ -8,12 +8,15 @@
 options::options(int argc, char *argv[])
 {
     int c;
-    verbeux = 1;
-    typelien = 1 ;
     opterr = 0;
     optind = 1;
+    
+    verbeux = 1;
+    typelien = 1 ;
+    valmax = 0 ;
     out = "/dev/null" ;
-    while ((c = getopt (argc, argv, "vqi:o:l:h")) != -1) {
+
+    while ((c = getopt (argc, argv, "vqi:o:l:hi?m:")) != -1) {
         switch (c) {
             case 'v':
                 verbeux++ ;
@@ -30,18 +33,21 @@ options::options(int argc, char *argv[])
             case 'l':
                 typelien = atoi(optarg) ;
                 break;
+            case 'm':
+                valmax   = atoi(optarg) ;
+                break;
             case 'h' :
+            case '?':
                 help() ;
                 exit(10) ;
                 break ;
-            case '?':
+            case '!':
                 if (isprint (optopt)) {
-                    help() ;
-                    fprintf (stderr, "Option inconnue `-%c'.\n", optopt);
+                    fprintf (stderr, "Option inconnue -%c.\n", optopt);
                 } else {
-                    help() ;
                     fprintf (stderr, "Caractère non reconnu dans les options `\\x%x'.\n",optopt);
                 }
+                exit(1) ;
             default:
                 abort ();
         }
@@ -65,20 +71,20 @@ options::getopt(int argc, char* argv[], char* opts)
 		}
 	optopt = c = argv[optind][sp];
 	if(c == ':' || (cp=strchr(opts, c)) == 0) {
-		printf("%s : illegal option -- %c",argv[0], c);
+		printf("%s : option inconnue -%c\n",argv[0], c);
 		if(argv[optind][++sp] == '\0') {
 			optind++;
 			sp = 1;
 		}
-		return('?');
+		return('!');
 	}
 	if(*++cp == ':') {
 		if(argv[optind][sp+1] != '\0')
 			optarg = &argv[optind++][sp+1];
 		else if(++optind >= argc) {
-			printf("%s : option requires an argument -- %c", argv[0], c);
+			printf("%s : l'option -%c attend un argument\n", argv[0], c);
 			sp = 1;
-			return('?');
+			return('!');
 		} else
 			optarg = argv[optind++];
 		sp = 1;
@@ -99,11 +105,15 @@ options::help()
     puts ("sous license GPL") ;
     puts ("");
     puts ("Utilisation : prunelle -i fich [-o fich] -l lien [-v] [-q] [-h]") ;
-    puts ("        -i : fichier flux préparé pour prunelle (obligatoire)");
-    puts ("        -o : nom du fichier en sortie (par défaut : /dev/null)");
-    puts ("        -l : type de lien (par défaut 0=aa)");
-    puts ("        -q : supprime les messages en sortie");
-    puts ("        -v : augmente les messages en sortie");
-    puts ("        -h : affiche cette aide");
+    puts ("   -i : fichier flux préparé pour prunelle (obligatoire)");
+    puts ("   -o : nom du fichier en sortie (par défaut : /dev/null)");
+    puts ("   -l : type de lien (par défaut 0=aa)");
+    puts ("      1 : AA = fab/aa");
+    puts ("      2 : ES = (fab+fba)/(sa+sb)");
+    puts ("      3 : STA = delta tx stabilité (AB) - max A,B");
+    puts ("   -m : stoppe le processus quand lien<valuer indiquée");
+    puts ("   -q : supprime les messages en sortie");
+    puts ("   -v : augmente les messages en sortie");
+    puts ("   -h : affiche cette aide");
     puts ("");
 }
