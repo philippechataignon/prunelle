@@ -13,8 +13,10 @@ public:
     ~valeur () {}
 
 public:
-    int   nb;
+    unsigned short   nb;
     float lien;
+    //bool  contig;
+    //int   dist;
 }
 ;
 #endif

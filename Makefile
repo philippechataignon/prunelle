@@ -1,14 +1,7 @@
-#CC=g++-3.4
-#CXX=g++-3.4
-#CXXFLAGS=-O2 -pipe -fomit-frame-pointer
-#LDD=g++
-# CXXFLAGS=-O2 -march=athlon-xp -pipe -g
-CC=/opt/intel/compiler81/bin/icc
-CXX=/opt/intel/compiler81/bin/icc
-CXXFLAGS=-O3 -axK -xK -tpp6   -march=pentiumiii
-# # CXXFLAGS=-O2
-#LDFLAGS=-static-libcxa
-# LDFLAGS=-cxxlib-gcc -gcc-name=g++
+CC=g++-3.4
+CXX=g++-3.4
+CXXFLAGS=-O2 -pipe -fomit-frame-pointer
+LDD=g++
 
 # OBJ = prunelle.o globals.o lien.o lien_elem.o matflux.o valeur.o element.o commune.o
 OBJ = prunelle.o options.o utils.o lien.o liens.o matflux.o valeur.o element.o commune.o
@@ -21,8 +14,15 @@ test:     $(OBJTEST)
 prep: prepare_flux
 prepare_flux: $(OBJPREP)
 
-prunelle.o: globals.h
+commune.o: commune.h element.h
+lien.o: lien.h commune.h matflux.h
+liens.o: liens.h commune.h matflux.h
+matflux.o: matflux.h valeur.h options.h 
+prepare_flux.o: commune.h matflux.h
+prunelle.o: lien.h liens.h commune.h matflux.h options.h utils.h globals.h
+test.o: matflux.h
+utils.o: commune.h matflux.h lien.h utils.h
+valeur.o: valeur.h
 
 clean:
-	-rm $(OBJ) $(OBJTEST) $(OBJPREP) *.obj *~ prunelle test prepare_flux
-
+	-rm -rf $(OBJ) $(OBJTEST) $(OBJPREP) *.obj *~ prunelle test prepare_flux

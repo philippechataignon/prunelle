@@ -28,7 +28,7 @@ void lecture_fich (std::istream & in, matflux & mflux, std::vector<commune> & vc
     }
     int numdcr, numdclt, nb ;
     std::cout << "Lecture flux :" << std::endl ;
-    for (int i=0 ; i<nbflux ; i++) {
+    for (int i=0; i<nbflux; i++) {
         in >> numdcr >> numdclt >> nb ;
         mflux.set_val(numdcr, numdclt, nb) ;
         if (numdcr != numdclt) {
@@ -75,6 +75,6 @@ void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb
         }
     }
     vcom[numdcb].status = 0 ;
-    vcom[numdca].maxlien = -1e20 ;
-    vcom[numdca].dcmaxlien = -1 ;
+    vcom[numdca].maxlien =  0 ;
+    vcom[numdca].dcmaxlien =  0;
 }

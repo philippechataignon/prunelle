@@ -9,10 +9,17 @@
 matflux::matflux (int w_dim, int w_nbval):
 dim(w_dim),nbval(w_nbval),indlig(0),indcol(0),indval(0)
 {
-    tabval = new valeur[nbval] ;
+    // tableau des valeurs
+    // valeur[0] est mis à 0
+    tabval = new valeur[nbval+1] ;
+    tabval[indval++]=0 ;
+    // tete de ligne = pointeur sur 1er élément
     tete_l = new element*[dim] ;
+    // les éléments des lignes 
     elt_l  = new element[nbval] ;
+    // tete de colonne = pointeur sur 1er élément
     tete_c = new element*[dim] ;
+    // les éléments des colonnes
     elt_c  = new element[nbval] ;
 
     for (unsigned int i = 0; i < dim; i++) {
@@ -56,7 +63,7 @@ int matflux::get_val (int w_lig,int w_col)
 void matflux::affiche()
 {
     for (unsigned int i=0 ; i<dim ; i++) {
-        std::cout << "Ligne " << i << " : " ;
+        std::cout << "Lig " << i << " : " ;
         for (element* j=tete_l[i] ; j != 0 ; j=j->next) {
              std::cout << *j << "[" << tabval[j->numval] << "] | "  ;
         }
@@ -142,7 +149,11 @@ matflux::insert (element* vtete[], int ind, element* pins)
     bool insert_fait = false;
 
     for (p = vtete[ind], pp = 0; p != 0; pp = p, p = p->next) {
-        if (p->numlc < pins->numlc) {
+        if (p->numlc <= pins->numlc) {
+            if (p->numlc == pins->numlc) {
+                std::cout << "Egalité indice" << ind << "/" << p->numlc << std::endl ;
+                delete_element(vtete,ind,pp,p) ;
+            }
             // insertion au milieu entre pp et p, soit après pp
             insere_element (vtete,ind, pins, pp, p);
             insert_fait = true;

@@ -7,6 +7,8 @@
 
 void lien::calcul_max(int numdc, float lien, int dcmaxlien) 
 {
+    // teste valeur du lien max et le max pour maj éventuelle
+    // pour la commune numdc
     if (lien > vcom[numdc].maxlien) {
         vcom[numdc].maxlien = lien ;
         vcom[numdc].dcmaxlien = dcmaxlien ;
@@ -15,7 +17,7 @@ void lien::calcul_max(int numdc, float lien, int dcmaxlien)
 
 void lien::calcul_init()
 {
-    for (unsigned int i=0; i<vcom.size(); i++) {
+    for (unsigned int i=1; i<vcom.size(); i++) {
         calcul_sim(i) ;
     }
 }
@@ -23,9 +25,15 @@ void lien::calcul_init()
 void
 lien::calcul_sim(int numdc)
 {
+    // on parcoure simultanément la ligne et la colonne numdc
+    // pl pointeur sur ligne
     element *pl = mflux.tete_l[numdc] ;
+    // pc pointeur sur colonne
     element *pc = mflux.tete_c[numdc] ;
+    // on parcoure tant que les 2 pointeurs ne sont pas nuls
     while (pl != 0 || pc != 0) {
+        // si colonne finie ou à une valeur strictement inférieure
+        // le traitement se fait qu'avec pl
         if ((pl != 0) && (pc == 0 || pl->numlc > pc->numlc)) {
             int numdc_l=numdc ;
             int numdc_c=pl->numlc ;
@@ -36,6 +44,8 @@ lien::calcul_sim(int numdc)
                 calcul_max(numdc_l,lien, numdc_c) ;
             }
             pl = pl->next;
+        // si ligne finie ou à une valeur strictement inférieure
+        // le traitement ne se fait qu'avec pc
         } else if ((pc != 0) && (pl == 0 ||pc->numlc > pl->numlc)) {
             int numdc_l=pc->numlc ;
             int numdc_c=numdc ;

@@ -11,38 +11,39 @@
 
 int main(int argc, char* argv[])
 {
-    std::cout << "Prépare_flux v1.00 - " << __DATE__ << " - " << __TIME__ <<
+    std::cerr << "Prépare_flux v1.00 - " << __DATE__ << " - " << __TIME__ <<
         std::endl;
 
-    if (argc != 3 ) {
-        std::cout << "Entrer fichier couple et fichier sortie \n";
+    if (argc != 2 ) {
+        std::cerr << "Entrer fichier couple et fichier sortie \n";
         std::exit (0);
     }
 
     std::ifstream flu (argv[1]);
     if (flu == 0) {
-        std::cout << "Erreur : impossible d'ouvrir le fichier couple" << std::endl ;
+        std::cerr << "Erreur : impossible d'ouvrir le fichier couple" << std::endl ;
 	std::exit(1);
     }
 
-    std::ofstream out (argv[2]);
+    /*std::ofstream out (argv[2]);
     if (out == 0) {
-        std::cout << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
+        std::cerr << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
 	std::exit(1);
     } else if (flu == out) {
-        std::cout << "Erreur : fichiers entrée et sortie identiques" ;
+        std::cerr << "Erreur : fichiers entrée et sortie identiques" ;
 	std::exit(1);
-    }
+    }*/
 
     std::set <std::string> set_com;
 
-    std::cout << "Début lecture fichier flux (Passe 1)" << std::endl ;
+    std::cerr << "Début lecture fichier flux (Passe 1)" << std::endl ;
 
     std::string coder;
     std::string codelt;
     int nb;
 
     int nbflux = 0 ;
+    set_com.insert("!!!!!") ;
     set_com.insert("*****") ;
     while (flu) {
         flu >> coder >> codelt >> nb;
@@ -54,15 +55,15 @@ int main(int argc, char* argv[])
     }
     
     nbflux-- ;
-    std::cout << "Nb flux non nuls : " << nbflux << " - Taille : " << set_com.size() << std::endl ;
-    std::cout << "Ecriture liste communes" << std::endl ;
+    std::cerr << "Nb flux non nuls : " << nbflux << " - Taille : " << set_com.size() << std::endl ;
+    std::cerr << "Ecriture liste communes" << std::endl ;
 
-    out << nbflux << "\n" ;
-    out << set_com.size() << "\n" ;
+    std::cout << nbflux << "\n" ;
+    std::cout << set_com.size() << "\n" ;
 
     int i = 0 ;
     for (std::set<std::string>::iterator p=set_com.begin() ; p != set_com.end() ; p++) {
-        out << i << "\t" << *p << "\n" ;
+        std::cout << i << "\t" << *p << "\n" ;
         i++ ;
     }
     
@@ -74,7 +75,7 @@ int main(int argc, char* argv[])
 
     std::copy(set_com.begin(), set_com.end(), back_inserter(vcom)) ;
     
-    std::cout << "Début lecture fichier flux (Passe2)" << std::endl ;
+    std::cerr << "Début lecture fichier flux (Passe2)" << std::endl ;
     while (flu) {
         std::string coder;
         std::string codelt;
@@ -82,12 +83,12 @@ int main(int argc, char* argv[])
         flu >> coder >> codelt >> nb;
 
         if (!coder.empty () && nb!= 0) {
-            out <<  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),coder)) 
+            std::cout <<  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),coder)) 
                 << "\t"
                 <<  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),codelt)) 
                 << "\t" << nb << "\n" ; 
                 ;
         }
     }
-    std::cout << "Fin lecture fichier flux" << std::endl ;
+    std::cerr << "Fin lecture fichier flux" << std::endl ;
 }

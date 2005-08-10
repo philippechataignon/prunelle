@@ -10,14 +10,14 @@
 #include "utils.h"
 #include "globals.h"
 
-// $Id: prunelle.cpp 52 2005-07-21 10:41:14Z philippe $
+// $Id: prunelle.cpp 53 2005-08-10 09:24:28Z philippe $
 
 
 int main(int argc, char* argv[])
 {
-    std::sting rev = "$Revision" ;
+    std::string rev = "$Revision" ;
     std::cout << "Prunelle - (c) 2005 Philippe CHATAIGNON" << "\n" << 
-    << __DATE__ << " - " << __TIME__ << std::endl;
+    rev.substr(1,rev.length()-1) << " - " << __DATE__ << " - " << __TIME__ << std::endl;
 
     options opt(argc,argv) ;
     std::cout << opt.get_in() << std::endl ;

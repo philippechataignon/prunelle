@@ -6,7 +6,7 @@
 class element
 {
 public:
-    element() : numlc(-1), numval(-1) {}
+    element() : numlc(0), numval(0) {}
     element (int w_numlc, int w_numval) : numlc(w_numlc), numval(w_numval), next(0) {}
 
     bool operator == (const element & rhs) const {
@@ -20,7 +20,7 @@ public:
 friend std::ostream & operator << (std::ostream & os, const element & element);
 
 public:
-    int   numlc  ;
+    unsigned short int   numlc  ;
     int   numval ;
     element* next ;
 }
