@@ -11,13 +11,13 @@ dim(w_dim),nbval(w_nbval),indlig(0),indcol(0),indval(0)
 {
     // tableau des valeurs
     tabval = new valeur[nbval] ;
-    // tete de ligne = pointeur sur 1er élément
+    // tete de ligne = pointeur sur 1er Ã©lÃ©ment
     tete_l = new element*[dim] ;
-    // les éléments des lignes 
+    // les Ã©lÃ©ments des lignes 
     elt_l  = new element[nbval] ;
-    // tete de colonne = pointeur sur 1er élément
+    // tete de colonne = pointeur sur 1er Ã©lÃ©ment
     tete_c = new element*[dim] ;
-    // les éléments des colonnes
+    // les Ã©lÃ©ments des colonnes
     elt_c  = new element[nbval] ;
 
     for (unsigned int i = 0; i < dim; i++) {
@@ -98,17 +98,17 @@ void matflux::merge (int inda, int indb)
 }
 
 //******************************************************************************
-// Fonctions élémentaires
+// Fonctions Ã©lÃ©mentaires
 //******************************************************************************
 
 element *
 matflux::ajoute_element (element* vtete[], int ind, element* pins, element* pp)
 {
-    //std::cout << "Insère element : (H)" << vtete << "\t" << pins <<
-    //    "\taprès" << pp << "\t" << std::endl;
-    if (vtete[ind] == 0 || pp == 0) {		// insertion en tête
+    //std::cout << "InsÃ¨re element : (H)" << vtete << "\t" << pins <<
+    //    "\taprÃ¨s" << pp << "\t" << std::endl;
+    if (vtete[ind] == 0 || pp == 0) {		// insertion en tÃªte
         vtete[ind] = pins;
-    } else {				// insertion après ppos
+    } else {				// insertion aprÃ¨s ppos
         pp->next = pins;
     }
     return pins;
@@ -118,11 +118,11 @@ element *
 matflux::insere_element (element* vtete[], int ind, element* pins, element* pp,
 			  element* p)
 {
-    // ajoute element pointé par pins entre pp et p
-    // si pp = 0, l'insertion se fait en tête
+    // ajoute element pointÃ© par pins entre pp et p
+    // si pp = 0, l'insertion se fait en tÃªte
 
-    //std::cout << "Insère element : (H)" << vtete << "\t" << pins <<
-    //    "\taprès" << pp << "\tavant" << p << std::endl;
+    //std::cout << "InsÃ¨re element : (H)" << vtete << "\t" << pins <<
+    //    "\taprÃ¨s" << pp << "\tavant" << p << std::endl;
 
     ajoute_element(vtete,ind, pins, pp) ;
     pins->next = p;				  // fait le lien vers l'avant
@@ -132,9 +132,9 @@ matflux::insere_element (element* vtete[], int ind, element* pins, element* pp,
 element *
 matflux::delete_element (element* vtete[], int ind, element* p, element* pp)
 {
-    // detruit element pointé par p
-    // nécessite le pointeur précédent pp pour lier la liste
-    // si pp = 0, on détruit le premier element en modifiant la tête de liste
+    // detruit element pointÃ© par p
+    // nÃ©cessite le pointeur prÃ©cÃ©dent pp pour lier la liste
+    // si pp = 0, on dÃ©truit le premier element en modifiant la tÃªte de liste
     // std::cout << "Delete element : " << ind << "\t" << p << "\t" << pp <<  std::endl;
 
     if (p) {
@@ -154,8 +154,8 @@ matflux::delete_element (element* vtete[], int ind, element* p, element* pp)
 int
 matflux::insert (element* vtete[], int ind, element* pins)
 {
-    // insere le element pointé par pins dans la ligne/colonne
-    // numéro w_num
+    // insere le element pointÃ© par pins dans la ligne/colonne
+    // numÃ©ro w_num
     element* p;
     element* pp;
 
@@ -164,10 +164,10 @@ matflux::insert (element* vtete[], int ind, element* pins)
     for (p = vtete[ind], pp = 0; p != 0; pp = p, p = p->next) {
         if (p->numlc <= pins->numlc) {
             if (p->numlc == pins->numlc) {
-                std::cout << "Egalité indice" << ind << "/" << p->numlc << std::endl ;
+                std::cout << "EgalitÃ© indice" << ind << "/" << p->numlc << std::endl ;
                 delete_element(vtete,ind,pp,p) ;
             }
-            // insertion au milieu entre pp et p, soit après pp
+            // insertion au milieu entre pp et p, soit aprÃ¨s pp
             insere_element (vtete,ind, pins, pp, p);
             insert_fait = true;
             break;
@@ -187,7 +187,7 @@ matflux::merge_lc (element* vtete_l[], element* vtete_c[], int inda, int indb )
     element *p = 0;                 // pointeur sur la liste en cours de constitution
     element *pa = vtete_l[inda];    // pointeur de la liste numdca
     element *pb = vtete_l[indb];    // pointeur de la liste numdcb
-    // tant que les deux listes ne sont pas épuisées
+    // tant que les deux listes ne sont pas Ã©puisÃ©es
     while (pa != 0 || pb != 0) {
         if ((pa != 0) && (pb == 0 || pa->numlc > pb->numlc)) {
             // on prend dans la liste A : cas le plus simple
@@ -200,7 +200,7 @@ matflux::merge_lc (element* vtete_l[], element* vtete_c[], int inda, int indb )
             pb = pb->next;
         } else {
             // on cumule l'element venant de B avec celui de A : 
-	    // on supprime dans le dual pour éviter les 0 inutiles 
+	    // on supprime dans le dual pour Ã©viter les 0 inutiles 
             tabval[pa->numval].nb += tabval[pb->numval].nb;
             tabval[pb->numval].nb = 0 ;
             delete_ind(vtete_c, pb->numlc, indb) ;

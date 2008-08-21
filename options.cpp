@@ -45,7 +45,7 @@ options::options(int argc, char *argv[])
                 if (isprint (optopt)) {
                     fprintf (stderr, "Option inconnue -%c.\n", optopt);
                 } else {
-                    fprintf (stderr, "Caractère non reconnu dans les options `\\x%x'.\n",optopt);
+                    fprintf (stderr, "CaractÃ¨re non reconnu dans les options `\\x%x'.\n",optopt);
                 }
                 exit(1) ;
             default:
@@ -105,14 +105,14 @@ options::help()
     puts ("sous license GPL") ;
     puts ("");
     puts ("Utilisation : prunelle [-o fich] [-l lien] [-v] [-q] [-h] < file_in") ;
-    puts (" file_in : fichier flux préparé pour prunelle (obligatoire)");
-    puts ("   -o : nom du fichier en sortie (par défaut : /dev/null)");
-    puts ("   -l : type de lien (par défaut 0=aa)");
+    puts (" file_in : fichier flux prÃ©parÃ© pour prunelle (obligatoire)");
+    puts ("   -o : nom du fichier en sortie (par dÃ©faut : /dev/null)");
+    puts ("   -l : type de lien (par dÃ©faut 0=aa)");
     puts ("      1 : AA = fab/aa");
     puts ("      2 : ES = (fab+fba)/(sa+sb)");
-    puts ("      3 : STA = delta tx stabilité (AB) - max A,B");
+    puts ("      3 : STA = delta tx stabilitÃ© (AB) - max A,B");
     puts ("      4 : PHC = nb");
-    puts ("   -m : stoppe le processus quand lien<valuer indiquée");
+    puts ("   -m : stoppe le processus quand lien<valuer indiquÃ©e");
     puts ("   -q : supprime les messages en sortie");
     puts ("   -v : augmente les messages en sortie");
     puts ("   -h : affiche cette aide");

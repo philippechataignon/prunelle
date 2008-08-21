@@ -58,11 +58,11 @@ int main(int argc, char* argv[])
     int cpt = 0;
     float prev_maxlien =  vlien->val_init() ;
 
-    std::cout << "Début boucle principale" << std::endl ;
+    std::cout << "DÃ©but boucle principale" << std::endl ;
     while (!fin && cpt++<(nbcom-1)) {
         mflux.affiche_mat() ;
         if ((cpt % 1000) == 0) {
-            std::cout << "Itération n°" << cpt << std::endl ;
+            std::cout << "ItÃ©ration nÂ°" << cpt << std::endl ;
         }
         float maxlien = vlien->val_init() ;
         int sat = -1 ;

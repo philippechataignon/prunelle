@@ -11,7 +11,7 @@
 
 int main(int argc, char* argv[])
 {
-    std::cerr << "Prépare_flux v1.00 - " << __DATE__ << " - " << __TIME__ <<
+    std::cerr << "PrÃ©pare_flux v1.00 - " << __DATE__ << " - " << __TIME__ <<
         std::endl;
 
     if (argc != 2 ) {
@@ -30,13 +30,13 @@ int main(int argc, char* argv[])
         std::cerr << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
 	std::exit(1);
     } else if (flu == out) {
-        std::cerr << "Erreur : fichiers entrée et sortie identiques" ;
+        std::cerr << "Erreur : fichiers entrÃ©e et sortie identiques" ;
 	std::exit(1);
     }*/
 
     std::set <std::string> set_com;
 
-    std::cerr << "Début lecture fichier flux (Passe 1)" << std::endl ;
+    std::cerr << "DÃ©but lecture fichier flux (Passe 1)" << std::endl ;
 
     std::string coder;
     std::string codelt;
@@ -44,7 +44,6 @@ int main(int argc, char* argv[])
 
     int nbflux = 0 ;
     set_com.insert("!!!!!") ;
-    set_com.insert("*****") ;
     while (flu) {
         flu >> coder >> codelt >> nb;
         if (!coder.empty () && nb!= 0) {
@@ -75,7 +74,7 @@ int main(int argc, char* argv[])
 
     std::copy(set_com.begin(), set_com.end(), back_inserter(vcom)) ;
     
-    std::cerr << "Début lecture fichier flux (Passe2)" << std::endl ;
+    std::cerr << "DÃ©but lecture fichier flux (Passe2)" << std::endl ;
     while (flu) {
         std::string coder;
         std::string codelt;
