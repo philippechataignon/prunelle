@@ -14,6 +14,7 @@ public:
     float calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d);
     float val_stop() const {return 0.01;}
     float val_init() const {return -1;}
+    bool is_sym() const {return 0;}
 }
 ;
 
@@ -25,6 +26,7 @@ public:
     float calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d);
     float val_stop() const {return 0.0;}
     float val_init() const {return -1;}
+    bool is_sym() const {return 1;}
 }
 ;
 
@@ -36,6 +38,7 @@ public:
     float calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d);
     float val_stop() const {return 0.0;}
     float val_init() const {return -200;}
+    bool is_sym() const {return 1;}
 }
 ;
 
@@ -47,6 +50,7 @@ public:
     float calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d);
     float val_stop() const {return -1 ;}
     float val_init() const {return -1 ;}
+    bool is_sym() const {return 0;}
 }
 ;
 #endif

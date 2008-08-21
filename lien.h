@@ -14,6 +14,7 @@ public:
     virtual float calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d) = 0;
     virtual float val_init() const = 0;
     virtual float val_stop() const = 0;
+    virtual bool is_sym() const = 0;
     
     void calcul_init() ;
     void calcul_sim(int numdc) ;

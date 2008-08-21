@@ -89,8 +89,10 @@ lien::calcul_sim(int numdc)
                     calcul_max(numdc_l,lien, numdc_c) ;
                 }
                 if ( mflux.tabval[numval_d].calc == 0 ) {
-                    lien = calcul_elem(numdc_c, numdc_l, 
-                                 mflux.tabval[numval_d].nb, mflux.tabval[numval].nb) ;
+                    if (! is_sym()) {
+                        lien = calcul_elem(numdc_c, numdc_l, 
+                        mflux.tabval[numval_d].nb, mflux.tabval[numval].nb) ;
+                    }
                     mflux.tabval[numval_d].lien = lien ;
                     mflux.tabval[numval_d].calc = 1 ;
                     calcul_max(numdc_c,lien, numdc_l) ;
