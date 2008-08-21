@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
         std::endl;
 
     if (argc != 2 ) {
-        std::cerr << "Entrer fichier couple et fichier sortie \n";
+        std::cerr << "Entrer fichier couple (sortie stdout)\n";
         std::exit (0);
     }
 

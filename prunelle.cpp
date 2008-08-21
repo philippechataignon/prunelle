@@ -60,6 +60,7 @@ int main(int argc, char* argv[])
 
     std::cout << "Début boucle principale" << std::endl ;
     while (!fin && cpt++<(nbcom-1)) {
+        mflux.affiche_mat() ;
         if ((cpt % 1000) == 0) {
             std::cout << "Itération n°" << cpt << std::endl ;
         }
@@ -91,6 +92,7 @@ int main(int argc, char* argv[])
                 std::cout << "AGR: " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\t" << rebond << "\n" ; 
             }
             agrege(mflux,vcom,pole,sat) ;
+            vlien->raz_calc (pole) ;
             vlien->calcul_sim (pole) ;
             out << vcom[pole] << "\n" ; 
         }

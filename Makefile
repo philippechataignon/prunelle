@@ -1,5 +1,5 @@
-CC=g++-3.4
-CXX=g++-3.4
+CC=g++
+CXX=g++
 CXXFLAGS=-O2 -pipe -fomit-frame-pointer
 LDD=g++
 

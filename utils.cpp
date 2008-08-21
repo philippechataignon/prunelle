@@ -56,7 +56,7 @@ void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb
 {
     // std::cout << "Agrégation" << std::endl ;
     // migrants internes = flux ab + flux ba
-    int mi  = mflux.get_val(numdca,numdcb) + mflux.get_val(numdcb,numdca) ;
+    int mi  = mflux.get_val(numdca,numdcb).nb + mflux.get_val(numdcb,numdca).nb ;
 
     vcom[numdca].mi  += vcom[numdcb].mi + mi ;
     vcom[numdca].si  += vcom[numdcb].si ;

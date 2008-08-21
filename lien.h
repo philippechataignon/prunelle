@@ -17,6 +17,7 @@ public:
     
     void calcul_init() ;
     void calcul_sim(int numdc) ;
+    void raz_calc(int numdc) ;
     
 protected:
     void calcul_max(int numdc, float lien, int dcmaxlien);

@@ -10,9 +10,7 @@ matflux::matflux (int w_dim, int w_nbval):
 dim(w_dim),nbval(w_nbval),indlig(0),indcol(0),indval(0)
 {
     // tableau des valeurs
-    // valeur[0] est mis à 0
-    tabval = new valeur[nbval+1] ;
-    tabval[indval++]=0 ;
+    tabval = new valeur[nbval] ;
     // tete de ligne = pointeur sur 1er élément
     tete_l = new element*[dim] ;
     // les éléments des lignes 
@@ -49,31 +47,46 @@ void matflux::set_val (int w_lig,int w_col, int w_val)
     insert(tete_c,w_col,&elt_c[i_col]) ;
 }
 
-int matflux::get_val (int w_lig,int w_col) 
+valeur matflux::get_val (int w_lig,int w_col) 
 {
-    int ret_val = 0 ;
     for (element* i=tete_l[w_lig]; i !=0 && i->numlc >= w_col; i=i->next) {
         if (i->numlc == w_col) {
-            ret_val = tabval[i->numval].nb ;
+            return tabval[i->numval] ;
         }
     }
-    return ret_val ;
+    return valeur() ; 
 }
 
 void matflux::affiche()
 {
+    std::cout << "Tabval " ;
+    for (unsigned int i=0 ; i<indval ; i++) {
+         std::cout << i << ":"<< tabval[i] << ","  ;
+        }
+    std::cout << std::endl ;
     for (unsigned int i=0 ; i<dim ; i++) {
         std::cout << "Lig " << i << " : " ;
         for (element* j=tete_l[i] ; j != 0 ; j=j->next) {
-             std::cout << *j << "[" << tabval[j->numval] << "] | "  ;
+             std::cout << *j <<  "|"  ;
         }
         std::cout << std::endl ;
     }
     for (unsigned int i=0 ; i<dim ; i++) {
         std::cout << "Col " << i << " : " ;
         for (element* j=tete_c[i] ; j != 0 ; j=j->next) {
-             std::cout << *j << "[" << tabval[j->numval] << "] | "  ;
+             std::cout << *j << "|"  ;
         }
+        std::cout << std::endl ;
+    }
+}
+
+void matflux::affiche_mat()
+{
+    std::cout << std::endl ;
+    for (unsigned int i=0 ; i<dim ; i++) {
+        for (unsigned int j=0 ; j<dim ; j++) {
+            std::cout << get_val(i,j) << "|" ;
+            }
         std::cout << std::endl ;
     }
 }

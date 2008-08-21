@@ -23,8 +23,20 @@ void lien::calcul_init()
 }
 
 void
+lien::raz_calc(int numdc)
+{
+    for (element* p = mflux.tete_l[numdc]; p!=0; p=p->next) {
+        mflux.tabval[p->numval].calc = 0 ;
+    }
+    for (element* p = mflux.tete_c[numdc]; p!=0; p=p->next) {
+        mflux.tabval[p->numval].calc = 0 ;
+    }
+}
+
+void
 lien::calcul_sim(int numdc)
 {
+    std::cout << numdc << std::endl ;
     // on parcoure simultanément la ligne et la colonne numdc
     // pl pointeur sur ligne
     element *pl = mflux.tete_l[numdc] ;
@@ -39,11 +51,14 @@ lien::calcul_sim(int numdc)
             int numdc_c=pl->numlc ;
             if (numdc_l != numdc_c && numdc_l && numdc_c) {
                 int numval=pl->numval ;
-                float lien = calcul_elem(numdc_l, numdc_c, mflux.tabval[numval].nb, 0) ;
-                mflux.tabval[numval].lien = lien ;
-                calcul_max(numdc_l,lien, numdc_c) ;
+                if ( mflux.tabval[numval].calc == 0 ) {
+                    float lien = calcul_elem(numdc_l, numdc_c, mflux.tabval[numval].nb, 0) ;
+                    mflux.tabval[numval].lien = lien ;
+                    mflux.tabval[numval].calc = 1 ;
+                    calcul_max(numdc_l,lien, numdc_c) ;
+                }
             }
-            pl = pl->next;
+           pl = pl->next;
         // si ligne finie ou à une valeur strictement inférieure
         // le traitement ne se fait qu'avec pc
         } else if ((pc != 0) && (pl == 0 ||pc->numlc > pl->numlc)) {
@@ -51,9 +66,12 @@ lien::calcul_sim(int numdc)
             int numdc_c=numdc ;
             if (numdc_l != numdc_c && numdc_l && numdc_c) {
                 int numval=pc->numval ;
-                float lien = calcul_elem(numdc_l, numdc_c, 0,mflux.tabval[numval].nb) ;
-                mflux.tabval[numval].lien = lien ;
-                calcul_max(numdc_l,lien, numdc_c) ;
+                if ( mflux.tabval[numval].calc == 0 ) {
+                    float lien = calcul_elem(numdc_l, numdc_c, 0,mflux.tabval[numval].nb) ;
+                    mflux.tabval[numval].lien = lien ;
+                    mflux.tabval[numval].calc = 1 ;
+                    calcul_max(numdc_l,lien, numdc_c) ;
+                }
             }
             pc = pc->next;
         } else {
@@ -62,14 +80,21 @@ lien::calcul_sim(int numdc)
             if (numdc_l != numdc_c && numdc_l && numdc_c) {
                 int numval=pl->numval ;
                 int numval_d=pc->numval ;
-                float lien = calcul_elem(numdc_l, numdc_c, 
-                             mflux.tabval[numval].nb, mflux.tabval[numval_d].nb) ;
-                mflux.tabval[numval].lien = lien ;
-                calcul_max(numdc_l,lien, numdc_c) ;
-                lien = calcul_elem(numdc_c, numdc_l, 
-                             mflux.tabval[numval_d].nb, mflux.tabval[numval].nb) ;
-                mflux.tabval[numval_d].lien = lien ;
-                calcul_max(numdc_c,lien, numdc_l) ;
+                float lien = 0 ;
+                if ( mflux.tabval[numval].calc == 0 ) {
+                    lien = calcul_elem(numdc_l, numdc_c, 
+                                 mflux.tabval[numval].nb, mflux.tabval[numval_d].nb) ;
+                    mflux.tabval[numval].lien = lien ;
+                    mflux.tabval[numval].calc = 1 ;
+                    calcul_max(numdc_l,lien, numdc_c) ;
+                }
+                if ( mflux.tabval[numval_d].calc == 0 ) {
+                    lien = calcul_elem(numdc_c, numdc_l, 
+                                 mflux.tabval[numval_d].nb, mflux.tabval[numval].nb) ;
+                    mflux.tabval[numval_d].lien = lien ;
+                    mflux.tabval[numval_d].calc = 1 ;
+                    calcul_max(numdc_c,lien, numdc_l) ;
+                }
             }
             pl = pl->next;
             pc = pc->next;

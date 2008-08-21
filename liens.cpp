@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 
 #include "commune.h"
@@ -6,11 +7,13 @@
 
 float lien_aa::calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d)
 {
+    std::cout<<numdc_l<<"\t"<<numdc_c<<"\t"<<nb<<"\t"<<nb_d<<"\t" ;
     float lien = 0 ;
     int a0 = vcom[numdc_l].act ;
     if (a0) {
         lien = static_cast<float> (100*nb)/a0 ;
     }
+    std::cout<<lien<<std::endl ;
     return lien ;
 } 
 

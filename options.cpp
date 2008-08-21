@@ -104,13 +104,14 @@ options::help()
     puts ("Prunelle - Philippe CHATAIGNON") ;
     puts ("sous license GPL") ;
     puts ("");
-    puts ("Utilisation : prunelle -i fich [-o fich] -l lien [-v] [-q] [-h]") ;
-    puts ("   -i : fichier flux préparé pour prunelle (obligatoire)");
+    puts ("Utilisation : prunelle [-o fich] [-l lien] [-v] [-q] [-h] < file_in") ;
+    puts (" file_in : fichier flux préparé pour prunelle (obligatoire)");
     puts ("   -o : nom du fichier en sortie (par défaut : /dev/null)");
     puts ("   -l : type de lien (par défaut 0=aa)");
     puts ("      1 : AA = fab/aa");
     puts ("      2 : ES = (fab+fba)/(sa+sb)");
     puts ("      3 : STA = delta tx stabilité (AB) - max A,B");
+    puts ("      4 : PHC = nb");
     puts ("   -m : stoppe le processus quand lien<valuer indiquée");
     puts ("   -q : supprime les messages en sortie");
     puts ("   -v : augmente les messages en sortie");
