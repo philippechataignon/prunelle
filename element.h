@@ -1,8 +1,5 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
-
-#include <iosfwd>
-
 class element
 {
 public:
@@ -25,5 +22,4 @@ public:
     element* next ;
 }
 ;
-
 #endif

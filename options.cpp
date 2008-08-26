@@ -112,7 +112,7 @@ options::help()
     puts ("      2 : ES = (fab+fba)/(sa+sb)");
     puts ("      3 : STA = delta tx stabilité (AB) - max A,B");
     puts ("      4 : PHC = nb");
-    puts ("   -m : stoppe le processus quand lien<valuer indiquée");
+    puts ("   -m : stoppe le processus quand lien<valeur indiquée");
     puts ("   -q : supprime les messages en sortie");
     puts ("   -v : augmente les messages en sortie");
     puts ("   -h : affiche cette aide");

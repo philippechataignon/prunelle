@@ -1,7 +1,7 @@
 #include <ostream>
 #include "commune.h"
 
-commune::commune (std::string w_nom):nom (w_nom)
+commune::commune(std::string w_nom):nom(w_nom)
 {
     ent = sor = act = emp = sta = 0;
     mi  = si  = 0 ;

@@ -21,7 +21,7 @@ public:
     valeur get_val (int w_lig,int w_col);
     int get_dim()   {return dim;}
     int get_nbval() {return nbval;}
-    //    listent list_num_lig(int w_lig) ;
+
     void affiche() ;
     void affiche_mat() ;
     void merge (int inda, int indb) ;

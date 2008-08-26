@@ -13,7 +13,7 @@ public:
     ~valeur () {}
 
 public:
-    unsigned short   nb;
+    unsigned short int nb;
     float lien;
     bool calc ;
 }

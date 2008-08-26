@@ -12,7 +12,7 @@ float lien_aa::calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d)
     if (a0) {
         lien = static_cast<float> (100*nb)/a0 ;
     }
-    std::cout<<numdc_l<<"\t"<<numdc_c<<"\t"<<nb<<"\t"<<nb_d<<"\t"<<lien<<std::endl ;
+    // std::cout<<numdc_l<<"\t"<<numdc_c<<"\t"<<nb<<"\t"<<nb_d<<"\t"<<lien<<std::endl ;
     return lien ;
 } 
 
@@ -24,7 +24,7 @@ float lien_es::calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d)
     if (s0 && s1) {
         lien =  static_cast<float> (100* (nb + nb_d)) / (s0 + s1) ;
     }
-    std::cout<<numdc_l<<"\t"<<numdc_c<<"\t"<<nb<<"\t"<<nb_d<<"\t"<<lien<<std::endl ;
+    // std::cout<<numdc_l<<"\t"<<numdc_c<<"\t"<<nb<<"\t"<<nb_d<<"\t"<<lien<<std::endl ;
     return lien ;
 }
 
@@ -56,6 +56,6 @@ float lien_sta::calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d)
             lien = 0;
         }
     }
-    std::cout<<numdc_l<<"\t"<<numdc_c<<"\t"<<nb<<"\t"<<nb_d<<"\t"<<lien<<std::endl ;
+    // std::cout<<numdc_l<<"\t"<<numdc_c<<"\t"<<nb<<"\t"<<nb_d<<"\t"<<lien<<std::endl ;
     return lien ;
 }

@@ -36,7 +36,6 @@ lien::raz_calc(int numdc)
 void
 lien::calcul_sim(int numdc)
 {
-    std::cout << numdc << std::endl ;
     // on parcoure simultanément la ligne et la colonne numdc
     // pl pointeur sur ligne
     element *pl = mflux.tete_l[numdc] ;
