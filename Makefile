@@ -1,6 +1,6 @@
 CC=g++
 CXX=g++
-CXXFLAGS=-O2 -pipe -fomit-frame-pointer
+CXXFLAGS=-O3 -pipe -fomit-frame-pointer
 LDD=g++
 
 # OBJ = prunelle.o globals.o lien.o lien_elem.o matflux.o valeur.o element.o commune.o

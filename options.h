@@ -13,7 +13,7 @@ public:
     std::string get_out() {return out;}
     int get_verbeux()     {return verbeux;}
     int get_typelien()    {return typelien;} 
-    int get_valmax()      {return valmax;} 
+    float get_valmax()    {return valmax;} 
 private:
     int getopt (int argc, char* argv[], char* opts);
     int opterr ;
@@ -24,7 +24,7 @@ private:
     std::string in ;
     std::string out ;
     int typelien ;
-    int valmax;
+    float valmax;
 };
 
 #endif

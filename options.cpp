@@ -34,7 +34,7 @@ options::options(int argc, char *argv[])
                 typelien = atoi(optarg) ;
                 break;
             case 'm':
-                valmax   = atoi(optarg) ;
+                valmax   = atof(optarg) ;
                 break;
             case 'h' :
             case '?':

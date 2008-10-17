@@ -16,31 +16,26 @@
 int main(int argc, char* argv[])
 {
     std::string rev = "$Revision" ;
-    std::cout << "Prunelle - (c) 2005 Philippe CHATAIGNON" << "\n" << 
+    std::cerr << "Prunelle - (c) Philippe CHATAIGNON" << "\n" << 
     rev.substr(1,rev.length()-1) << " - " << __DATE__ << " - " << __TIME__ << std::endl;
 
     options opt(argc,argv) ;
-    std::cout << opt.get_in() << std::endl ;
 
     std::ofstream out (opt.get_out().c_str());
     if (out == 0) {
-        std::cout << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
+        std::cerr << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
         std::exit(1);
     }
 
     int nbcom, nbflux ;
     std::cin >> nbflux ;
     std::cin >> nbcom ;
-    std::cout << nbflux << "/" << nbcom << "/" << opt.get_typelien() << "/" << opt.get_verbeux() <<std::endl ;
+    std::cerr << nbflux << "/" << nbcom << "/" << opt.get_typelien() << "/" << opt.get_verbeux() <<std::endl ;
 
     std::vector<commune> vcom ;
     vcom.reserve(nbcom) ;
     matflux mflux (nbcom,nbflux);
     lecture_fich (std::cin, mflux, vcom);
-
-    for (int i=0; i<vcom.size(); i++) {
-        out << vcom[i] << "\n" ;
-    }
 
     lien* vlien ;
     switch (opt.get_typelien()) {
@@ -51,18 +46,18 @@ int main(int argc, char* argv[])
         default : vlien=new lien_aa(mflux,vcom) ; break;
     }
 
-    std::cout << "Calcul des liens init" << std::endl ;
+    std::cerr << "Calcul des liens init" << std::endl ;
     vlien->calcul_init() ;
 
     bool fin = false ;
     int cpt = 0;
     float prev_maxlien =  vlien->val_init() ;
 
-    std::cout << "Début boucle principale" << std::endl ;
+    std::cerr << "Début boucle principale" << std::endl ;
     while (!fin && cpt++<(nbcom-1)) {
         // mflux.affiche_mat() ;
         if ((cpt % 1000) == 0) {
-            std::cout << "Itération n°" << cpt << std::endl ;
+            std::cerr << "Itération n°" << cpt << std::endl ;
         }
         float maxlien = vlien->val_init() ;
         int sat = -1 ;
@@ -89,7 +84,7 @@ int main(int argc, char* argv[])
             // out << pole << '\t' << sat << '\t' << maxlien << "\t" << rebond << "\n" ; 
             out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << maxlien << "\t" << rebond << "\t" << vcom[sat] << "\t";
             if (opt.get_verbeux()  >= 1) {
-                std::cout << "AGR: " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\t" << rebond << "\n" ; 
+                std::cerr << "AGR: " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\t" << rebond << "\n" ; 
             }
             agrege(mflux,vcom,pole,sat) ;
             vlien->raz_calc(pole) ;

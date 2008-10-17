@@ -14,8 +14,8 @@ int main(int argc, char* argv[])
     std::cerr << "Prépare_flux v1.00 - " << __DATE__ << " - " << __TIME__ <<
         std::endl;
 
-    if (argc != 2 ) {
-        std::cerr << "Entrer fichier couple (sortie stdout)\n";
+    if (argc != 3 ) {
+        std::cerr << "Entrer fichier couple et nom du fichier en sortie\n";
         std::exit (0);
     }
 
@@ -25,23 +25,17 @@ int main(int argc, char* argv[])
 	std::exit(1);
     }
 
-    /*std::ofstream out (argv[2]);
-    if (out == 0) {
+    std::ofstream out_flu(argv[2]);
+    if (out_flu == 0) {
         std::cerr << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
-	std::exit(1);
-    } else if (flu == out) {
-        std::cerr << "Erreur : fichiers entrée et sortie identiques" ;
-	std::exit(1);
-    }*/
+        std::exit(2);
+    }
 
     std::set <std::string> set_com;
-
     std::cerr << "Début lecture fichier flux (Passe 1)" << std::endl ;
-
     std::string coder;
     std::string codelt;
     int nb;
-
     int nbflux = 0 ;
     set_com.insert("!!!!!") ;
     while (flu) {
@@ -52,17 +46,16 @@ int main(int argc, char* argv[])
             set_com.insert(codelt) ;
         }
     }
-    
     nbflux-- ;
     std::cerr << "Nb flux non nuls : " << nbflux << " - Taille : " << set_com.size() << std::endl ;
     std::cerr << "Ecriture liste communes" << std::endl ;
 
-    std::cout << nbflux << "\n" ;
-    std::cout << set_com.size() << "\n" ;
+    out_flu << nbflux << "\n" ;
+    out_flu  << set_com.size() << "\n" ;
 
     int i = 0 ;
     for (std::set<std::string>::iterator p=set_com.begin() ; p != set_com.end() ; p++) {
-        std::cout << i << "\t" << *p << "\n" ;
+        out_flu << i << "\t" << *p << "\n" ;
         i++ ;
     }
     
@@ -82,7 +75,7 @@ int main(int argc, char* argv[])
         flu >> coder >> codelt >> nb;
 
         if (!coder.empty () && nb!= 0) {
-            std::cout <<  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),coder)) 
+            out_flu <<  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),coder)) 
                 << "\t"
                 <<  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),codelt)) 
                 << "\t" << nb << "\n" ; 
