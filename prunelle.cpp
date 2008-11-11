@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     std::ofstream out (opt.get_out().c_str());
     if (out == 0) {
         std::cerr << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
-        std::exit(1);
+        return 1;
     }
 
     int nbcom, nbflux ;
