@@ -5,7 +5,7 @@
 #include "matflux.h"
 #include "lien.h"
 
-void lien::calcul_max(int numdc, float lien, int dcmaxlien) 
+void lien::calcul_max(int numdc, double lien, int dcmaxlien) 
 {
     // teste valeur du lien max et le max pour maj éventuelle
     // pour la commune numdc
@@ -51,7 +51,7 @@ lien::calcul_sim(int numdc)
             if (numdc_l != numdc_c && numdc_l && numdc_c) {
                 int numval=pl->numval ;
                 if ( mflux.tabval[numval].calc == 0 ) {
-                    float lien = calcul_elem(numdc_l, numdc_c, mflux.tabval[numval].nb, 0) ;
+                    double lien = calcul_elem(numdc_l, numdc_c, mflux.tabval[numval].nb, 0) ;
                     mflux.tabval[numval].lien = lien ;
                     mflux.tabval[numval].calc = 1 ;
                     calcul_max(numdc_l,lien, numdc_c) ;
@@ -66,7 +66,7 @@ lien::calcul_sim(int numdc)
             if (numdc_l != numdc_c && numdc_l && numdc_c) {
                 int numval=pc->numval ;
                 if ( mflux.tabval[numval].calc == 0 ) {
-                    float lien = calcul_elem(numdc_l, numdc_c, 0,mflux.tabval[numval].nb) ;
+                    double lien = calcul_elem(numdc_l, numdc_c, 0,mflux.tabval[numval].nb) ;
                     mflux.tabval[numval].lien = lien ;
                     mflux.tabval[numval].calc = 1 ;
                     calcul_max(numdc_l,lien, numdc_c) ;
@@ -79,7 +79,7 @@ lien::calcul_sim(int numdc)
             if (numdc_l != numdc_c && numdc_l && numdc_c) {
                 int numval=pl->numval ;
                 int numval_d=pc->numval ;
-                float lien = 0 ;
+                double lien = 0 ;
                 if ( mflux.tabval[numval].calc == 0 ) {
                     lien = calcul_elem(numdc_l, numdc_c, 
                                  mflux.tabval[numval].nb, mflux.tabval[numval_d].nb) ;

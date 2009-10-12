@@ -35,7 +35,7 @@ matflux::~matflux ()
     delete[] elt_c  ;
 }
 
-void matflux::set_val (int w_lig,int w_col, int w_val)
+void matflux::set_val (int w_lig,int w_col, double w_val)
 {
     int i_val = indval++ ;
     int i_lig = indlig++ ;

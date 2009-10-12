@@ -14,9 +14,10 @@ options::options(int argc, char *argv[])
     verbeux = 1;
     typelien = 1 ;
     valmax = 0 ;
-    out = "/dev/null" ;
+    out = "" ;
+    pre = "" ;
 
-    while ((c = getopt (argc, argv, "vqi:o:l:hi?m:")) != -1) {
+    while ((c = getopt (argc, argv, "vqi:o:p:l:hi?m:")) != -1) {
         switch (c) {
             case 'v':
                 verbeux++ ;
@@ -29,6 +30,9 @@ options::options(int argc, char *argv[])
                 break;
             case 'o':
                 out = std::string(optarg) ;
+                break;
+            case 'p':
+                pre = std::string(optarg) ;
                 break;
             case 'l':
                 typelien = atoi(optarg) ;
@@ -107,6 +111,7 @@ options::help()
     puts ("Utilisation : prunelle [-o fich] [-l lien] [-v] [-q] [-h] < file_in") ;
     puts (" file_in : fichier flux préparé pour prunelle (obligatoire)");
     puts ("   -o : nom du fichier en sortie (par défaut : /dev/null)");
+    puts ("   -p : nom du fichier préagrégation (par défaut : /dev/null)");
     puts ("   -l : type de lien (par défaut 0=aa)");
     puts ("      1 : AA = fab/aa");
     puts ("      2 : ES = (fab+fba)/(sa+sb)");

@@ -21,11 +21,6 @@ int main(int argc, char* argv[])
 
     options opt(argc,argv) ;
 
-    std::ofstream out (opt.get_out().c_str());
-    if (out == 0) {
-        std::cerr << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
-        return 1;
-    }
 
     int nbcom, nbflux ;
     std::cin >> nbflux ;
@@ -51,7 +46,26 @@ int main(int argc, char* argv[])
 
     bool fin = false ;
     int cpt = 0;
-    float prev_maxlien =  vlien->val_init() ;
+    double prev_maxlien =  vlien->val_init() ;
+
+    std::ifstream pre (opt.get_pre().c_str());
+    std::ofstream out (opt.get_out().c_str());
+    if (opt.get_out() != "" ) {
+        std::cerr << "Début préagrégation" << std::endl ;
+
+        while (!pre.eof()) {
+            int sat, pole ;
+            pre >> pole >> sat ;
+            out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << 0 << "\t" << 0 << "\t" << vcom[sat] << "\t";
+            if (opt.get_verbeux()  >= 1) {
+                std::cerr << "PRE: " << vcom[pole].nom << "<" <<vcom[sat].nom << "\n" ; 
+            }
+            agrege(mflux,vcom,pole,sat) ;
+            vlien->raz_calc(pole) ;
+            vlien->calcul_sim(pole) ;
+            out << vcom[pole] << "\n" ; 
+        }
+    }
 
     std::cerr << "Début boucle principale" << std::endl ;
     while (!fin && cpt++<(nbcom-1)) {
@@ -59,7 +73,7 @@ int main(int argc, char* argv[])
         if ((cpt % 1000) == 0) {
             std::cerr << "Itération n°" << cpt << std::endl ;
         }
-        float maxlien = vlien->val_init() ;
+        double maxlien = vlien->val_init() ;
         int sat = -1 ;
         int pole = -1 ;
         for(int i=0 ; i<nbcom; i++) {
@@ -75,7 +89,7 @@ int main(int argc, char* argv[])
         }
         fin = (sat == -1 || pole == -1 || maxlien<=vlien->val_stop() || maxlien<opt.get_valmax() ) ;
         if (!fin) {
-            float rebond = 0 ;
+            double rebond = 0 ;
             if (maxlien > prev_maxlien && cpt != 1) {
                 rebond = maxlien - prev_maxlien ;
             } else {

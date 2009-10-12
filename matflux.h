@@ -17,7 +17,7 @@ public:
     matflux (int w_dim,int w_nbval);
     ~matflux ();
 
-    void set_val (int w_lig,int w_col, int w_val);
+    void set_val (int w_lig,int w_col, double w_val);
     valeur get_val (int w_lig,int w_col);
     int get_dim()   {return dim;}
     int get_nbval() {return nbval;}

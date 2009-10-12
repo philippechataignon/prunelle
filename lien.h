@@ -11,9 +11,9 @@ class lien
 public:
     lien(matflux & w_mflux, std::vector<commune> & w_vcom) : mflux(w_mflux), vcom(w_vcom) {}
 
-    virtual float calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d) = 0;
-    virtual float val_init() const = 0;
-    virtual float val_stop() const = 0;
+    virtual double calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d) = 0;
+    virtual double val_init() const = 0;
+    virtual double val_stop() const = 0;
     virtual bool is_sym() const = 0;
     
     void calcul_init() ;
@@ -21,7 +21,7 @@ public:
     void raz_calc(int numdc) ;
     
 protected:
-    void calcul_max(int numdc, float lien, int dcmaxlien);
+    void calcul_max(int numdc, double lien, int dcmaxlien);
     
     matflux & mflux ; 
     std::vector<commune> & vcom ;

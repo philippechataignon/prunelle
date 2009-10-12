@@ -25,7 +25,8 @@ void lecture_fich (std::istream & in, matflux & mflux, std::vector<commune> & vc
         // std::cerr << nom << std::endl ;
         vcom.push_back(commune(nom)) ;
     }
-    int numdcr, numdclt, nb ;
+    int numdcr, numdclt ;
+    double nb ;
     std::cerr << "Lecture flux :" << std::endl ;
     for (int i=0; i<nbflux; i++) {
         in >> numdcr >> numdclt >> nb ;
@@ -54,7 +55,7 @@ void agrege(matflux & mflux, std::vector<commune> & vcom, int numdca, int numdcb
 {
     // std::cout << "Agrégation" << std::endl ;
     // migrants internes = flux ab + flux ba
-    int mi  = mflux.get_val(numdca,numdcb).nb + mflux.get_val(numdcb,numdca).nb ;
+    double mi  = mflux.get_val(numdca,numdcb).nb + mflux.get_val(numdcb,numdca).nb ;
 
     vcom[numdca].mi  += vcom[numdcb].mi + mi ;
     vcom[numdca].si  += vcom[numdcb].si ;

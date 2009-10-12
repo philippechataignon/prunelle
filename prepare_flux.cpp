@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     std::cerr << "Début lecture fichier flux (Passe 1)" << std::endl ;
     std::string coder;
     std::string codelt;
-    int nb;
+    double nb;
     int nbflux = 0 ;
     set_com.insert("!!!!!") ;
     while (flu) {
@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
     while (flu) {
         std::string coder;
         std::string codelt;
-        int nb;
+        double nb;
         flu >> coder >> codelt >> nb;
 
         if (!coder.empty () && nb!= 0) {

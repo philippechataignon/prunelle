@@ -11,9 +11,10 @@ public:
     void help() ;
     std::string get_in()  {return in;}
     std::string get_out() {return out;}
+    std::string get_pre() {return pre;}
     int get_verbeux()     {return verbeux;}
     int get_typelien()    {return typelien;} 
-    float get_valmax()    {return valmax;} 
+    double get_valmax()    {return valmax;} 
 private:
     int getopt (int argc, char* argv[], char* opts);
     int opterr ;
@@ -23,8 +24,9 @@ private:
     int verbeux ;
     std::string in ;
     std::string out ;
+    std::string pre ;
     int typelien ;
-    float valmax;
+    double valmax;
 };
 
 #endif
