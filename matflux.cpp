@@ -85,7 +85,7 @@ void matflux::affiche_mat()
     std::cout << std::endl ;
     for (unsigned int i=0 ; i<dim ; i++) {
         for (unsigned int j=0 ; j<dim ; j++) {
-            std::cout << get_val(i,j) << "|" ;
+            std::cout << get_val(i,j).nb << "\t" ;
             }
         std::cout << std::endl ;
     }

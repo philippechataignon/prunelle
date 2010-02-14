@@ -5,10 +5,10 @@
 #include "matflux.h"
 #include "liens.h"
 
-double lien_aa::calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d)
+double lien_aa::calcul_elem(int numdc_l, int numdc_c, double nb, double nb_d)
 {
     double lien = 0 ;
-    int a0 = vcom[numdc_l].act ;
+    double a0 = vcom[numdc_l].act ;
     if (a0) {
         lien = static_cast<double> (100*nb)/a0 ;
     }
@@ -16,11 +16,11 @@ double lien_aa::calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d)
     return lien ;
 } 
 
-double lien_es::calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d)
+double lien_es::calcul_elem(int numdc_l, int numdc_c, double nb, double nb_d)
 {
     double lien = 0 ;
-    int s0 = vcom[numdc_l].sor ;
-    int s1 = vcom[numdc_c].sor ;
+    double s0 = vcom[numdc_l].sor ;
+    double s1 = vcom[numdc_c].sor ;
     if (s0 && s1) {
         lien =  static_cast<double> (100* (nb + nb_d)) / (s0 + s1) ;
     }
@@ -28,7 +28,7 @@ double lien_es::calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d)
     return lien ;
 }
 
-double lien_phc::calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d)
+double lien_phc::calcul_elem(int numdc_l, int numdc_c, double nb, double nb_d)
 {
     double lien = 0;
     lien = nb ;
@@ -38,15 +38,15 @@ double lien_phc::calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d)
     return lien ;
 }
 
-double lien_sta::calcul_elem(int numdc_l, int numdc_c, int nb, int nb_d)
+double lien_sta::calcul_elem(int numdc_l, int numdc_c, double nb, double nb_d)
 {
     double lien = 0;
-    int a0 = vcom[numdc_l].act ;
-    int s0 = vcom[numdc_l].sta ;
-    int a1 = vcom[numdc_c].act ;
-    int s1 = vcom[numdc_c].sta ;
+    double a0 = vcom[numdc_l].act ;
+    double s0 = vcom[numdc_l].sta ;
+    double a1 = vcom[numdc_c].act ;
+    double s1 = vcom[numdc_c].sta ;
     if (a0 && a1) {
-        int sab = s0 + s1 + nb + nb_d ;
+        double sab = s0 + s1 + nb + nb_d ;
         double txsta_ab = static_cast<double> (100*sab) / (a0+a1) ;
         double txsta_a = static_cast<double>  (100*s0)  / a0 ;
         double txsta_b = static_cast<double>  (100*s1)  / a1 ;

@@ -47,23 +47,20 @@ int main(int argc, char* argv[])
     bool fin = false ;
     int cpt = 0;
     double prev_maxlien =  vlien->val_init() ;
-
-    std::ifstream pre (opt.get_pre().c_str());
     std::ofstream out (opt.get_out().c_str());
-    if (opt.get_out() != "" ) {
+    if (opt.get_pre().length() > 0) {
+        std::ifstream pre (opt.get_pre().c_str());
         std::cerr << "Début préagrégation" << std::endl ;
-
         while (!pre.eof()) {
             int sat, pole ;
             pre >> pole >> sat ;
-            out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << 0 << "\t" << 0 << "\t" << vcom[sat] << "\t";
+            out << vcom[pole].nom << "\t" << vcom[sat].nom << "\t" << -1 << "\t" << -1 << "\n";
             if (opt.get_verbeux()  >= 1) {
                 std::cerr << "PRE: " << vcom[pole].nom << "<" <<vcom[sat].nom << "\n" ; 
             }
             agrege(mflux,vcom,pole,sat) ;
             vlien->raz_calc(pole) ;
             vlien->calcul_sim(pole) ;
-            out << vcom[pole] << "\n" ; 
         }
     }
 
@@ -96,14 +93,14 @@ int main(int argc, char* argv[])
                 rebond = 0 ;
             }
             // out << pole << '\t' << sat << '\t' << maxlien << "\t" << rebond << "\n" ; 
-            out << vcom[pole].nom << " < " <<vcom[sat].nom << '\t' << maxlien << "\t" << rebond << "\t" << vcom[sat] << "\t";
+            out << vcom[pole].nom << "\t" << vcom[sat].nom << "\t" << maxlien << "\t" << rebond << "\n";
             if (opt.get_verbeux()  >= 1) {
                 std::cerr << "AGR: " << vcom[pole].nom << "<" <<vcom[sat].nom << '\t' << maxlien << "\t" << rebond << "\n" ; 
             }
             agrege(mflux,vcom,pole,sat) ;
             vlien->raz_calc(pole) ;
             vlien->calcul_sim(pole) ;
-            out << vcom[pole] << "\n" ; 
+            // out << vcom[pole] << "\n" ; 
         }
         prev_maxlien = maxlien ;
     }
