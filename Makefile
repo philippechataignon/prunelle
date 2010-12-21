@@ -9,10 +9,13 @@ OBJTEST = test.o matflux.o valeur.o element.o
 OBJPREP = prepare_flux.o matflux.o valeur.o element.o commune.o
 
 all:prunelle test prepare_flux
+
 prunelle: $(OBJ)
+	$(CC) -o $@ $(OBJ)
 test:     $(OBJTEST)
-prep: prepare_flux
+	$(CC) -o $@ $(OBJTEST)
 prepare_flux: $(OBJPREP)
+	$(CC) -o $@ $(OBJPREP)
 
 commune.o: commune.h element.h
 lien.o: lien.h commune.h matflux.h
