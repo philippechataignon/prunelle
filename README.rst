@@ -3,6 +3,9 @@ Prunelle
 
 Programme d'agrégation d'éléments en fonction de liens
 
+Présentation
+------------
+
 Ce programme reprend les idées de Christophe Terrier pour Mirabel et calculant
 des liens entre zones, en général des communes ou ensemble de communes, 
 et en agrégeant ces zones en fonction de la valeur d'un lien, historiquement le
@@ -42,3 +45,8 @@ La commande ::
     ./prunelle -h 
 
 donne différentes options du programme
+
+Video de démonstration
+----------------------
+
+http://biweight.ath.cx/files/video_prunelle.avi
