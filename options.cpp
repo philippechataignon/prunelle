@@ -3,21 +3,21 @@
 #include <cstring>
 #include <cctype>
 
-#include "options.h" 
+#include "options.h"
 
 options::options(int argc, char *argv[])
 {
     int c;
     opterr = 0;
     optind = 1;
-    
+
     verbeux = 1;
     typelien = 1 ;
     valmax = 0 ;
     out = "" ;
     pre = "" ;
 
-    while ((c = getopt (argc, argv, "vqi:o:p:l:hi?m:")) != -1) {
+    while ((c = getopt(argc, argv, std::string("vqi:o:p:l:hi?m:").c_str())) != -1) {
         switch (c) {
             case 'v':
                 verbeux++ ;
@@ -26,7 +26,7 @@ options::options(int argc, char *argv[])
                 verbeux = 0 ;
                 break;
             case 'i':
-                in = std::string(optarg) ; 
+                in = std::string(optarg) ;
                 break;
             case 'o':
                 out = std::string(optarg) ;
@@ -55,15 +55,15 @@ options::options(int argc, char *argv[])
             default:
                 abort ();
         }
-    }    
+    }
 }
 
 int
-options::getopt(int argc, char* argv[], char* opts)
+options::getopt(int argc, char* argv[], const char* opts)
 {
 	static int sp = 1;
-	register int c;
-	register char *cp;
+	int c;
+	const char *cp;
 
 	if(sp == 1)
 		if(optind >= argc ||
@@ -74,7 +74,7 @@ options::getopt(int argc, char* argv[], char* opts)
 			return(EOF);
 		}
 	optopt = c = argv[optind][sp];
-	if(c == ':' || (cp=strchr(opts, c)) == 0) {
+	if(c == ':' || (cp = strchr(opts, c)) == 0) {
 		printf("%s : option inconnue -%c\n",argv[0], c);
 		if(argv[optind][++sp] == '\0') {
 			optind++;

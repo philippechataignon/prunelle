@@ -19,14 +19,14 @@ int main(int argc, char* argv[])
         std::exit (0);
     }
 
-    std::ifstream flu (argv[1]);
-    if (flu == 0) {
+    std::ifstream flu(argv[1]);
+    if (!flu.is_open()) {
         std::cerr << "Erreur : impossible d'ouvrir le fichier couple" << std::endl ;
-	std::exit(1);
+	    std::exit(1);
     }
 
     std::ofstream out_flu(argv[2]);
-    if (out_flu == 0) {
+    if (!out_flu.is_open()) {
         std::cerr << "Erreur : impossible d'ouvrir le fichier sortie" << std::endl ;
         std::exit(2);
     }
@@ -58,15 +58,15 @@ int main(int argc, char* argv[])
         out_flu << i << "\t" << *p << "\n" ;
         i++ ;
     }
-    
+
     flu.clear() ;
-    flu.seekg (0) ;
+    flu.seekg(0) ;
 
     std::vector<std::string> vcom ;
     vcom.reserve(set_com.size()) ;
 
     std::copy(set_com.begin(), set_com.end(), back_inserter(vcom)) ;
-    
+
     std::cerr << "Début lecture fichier flux (Passe2)" << std::endl ;
     while (flu) {
         std::string coder;
@@ -75,10 +75,10 @@ int main(int argc, char* argv[])
         flu >> coder >> codelt >> nb;
 
         if (!coder.empty () && nb!= 0) {
-            out_flu <<  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),coder)) 
+            out_flu <<  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),coder))
                 << "\t"
-                <<  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),codelt)) 
-                << "\t" << nb << "\n" ; 
+                <<  std::distance(vcom.begin(), lower_bound(vcom.begin(), vcom.end(),codelt))
+                << "\t" << nb << "\n" ;
                 ;
         }
     }
