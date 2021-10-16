@@ -14,12 +14,13 @@ int main(int argc, char* argv[])
     std::cerr << "Prépare_flux v1.00 - " << __DATE__ << " - " << __TIME__ <<
         std::endl;
 
-    if (argc != 3 ) {
+    if (argc != 3) {
         std::cerr << "Entrer fichier couple et nom du fichier en sortie\n";
-        std::exit (0);
+        std::exit(0);
     }
 
     std::ifstream flu(argv[1]);
+
     if (!flu.is_open()) {
         std::cerr << "Erreur : impossible d'ouvrir le fichier couple" << std::endl ;
 	    std::exit(1);
